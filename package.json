@@ -11,11 +11,13 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@types/basic-auth": "^1.1.4",
     "@types/compression": "^1.7.3",
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.6.2",
+    "@types/tsscmp": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "aws-sdk-client-mock": "^3.0.0",
@@ -33,10 +35,12 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.414.0",
     "@aws-sdk/s3-request-presigner": "^3.414.0",
+    "basic-auth": "^2.0.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "tsscmp": "^1.0.6"
   }
 }
