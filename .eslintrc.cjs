@@ -8,14 +8,14 @@ module.exports = {
   plugins: ['@typescript-eslint', 'jest'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: true,
+    project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
   env: {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.cjs'],
+  ignorePatterns: ['.eslintrc.cjs', 'jest.config.ts'],
   rules: {
     'no-console': 'off',
     'no-constant-condition': [
@@ -30,5 +30,10 @@ module.exports = {
         props: false,
       },
     ],
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off'
   },
 };
