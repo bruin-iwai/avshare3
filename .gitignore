@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/node
-# Edit at https://www.toptal.com/developers/gitignore?templates=node
+# Created by https://www.toptal.com/developers/gitignore/api/node,nuxtjs
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,nuxtjs
 
 ### Node ###
 # Logs
@@ -141,6 +141,17 @@ public
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/node
+### NuxtJS ###
+# Generated dirs
+.nuxt-*
+.output
+.gen
+
+# Node dependencies
+node_modules
+
+# System files
+
+# End of https://www.toptal.com/developers/gitignore/api/node,nuxtjs
 
 .bashrc

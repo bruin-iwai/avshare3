@@ -6,10 +6,12 @@ module.exports = {
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'jest'],
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
     tsconfigRootDir: __dirname,
+    extraFileExtensions: ['.vue'],
   },
   env: {
     node: true,
@@ -36,4 +38,15 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off'
   },
+
+  overrides: [
+    {
+      files: ['packages/gui/**/*.{ts.vue}'],
+      extends: [
+        '@nuxtjs/eslint-config-typescript',
+        'plugin:nuxt/recommended',
+        'prettier',
+      ],
+    },
+  ],
 };
