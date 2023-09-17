@@ -8,7 +8,10 @@
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.vue .",
     "start": "npm run start -w @avshare3/api",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "testall": "npm run format && npm run lint && npm test",
+    "deploy:gui": "npm run generate -w @avshare3/gui && aws s3 sync packages/gui/dist/ s3://${BUCKET_FRONTEND}/",
+    "deploy:api": "npm run sls -w @avshare3/api -- deploy"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",

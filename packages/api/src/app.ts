@@ -1,4 +1,3 @@
-import path from 'node:path';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -26,10 +25,7 @@ app.use((req, res, next) => {
   }
 });
 
-// location for gui contents
-app.use(express.static(path.resolve(__dirname, '../public')));
-
-app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // app.listen(port, () => {
 //   console.log(`App started on port ${port}`);

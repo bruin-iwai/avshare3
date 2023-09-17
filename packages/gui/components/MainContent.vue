@@ -29,8 +29,11 @@
 </template>
 
 <script setup lang="ts">
-/* global ref, watchEffect, $fetch */
+/* global ref, watchEffect, useFetch, useRuntimeConfig */
 import { UrlInfo } from '@avshare3/api/src/api/indexSchema';
+
+// get config
+const config = useRuntimeConfig();
 
 // states
 const prefix = ref('');
@@ -47,8 +50,13 @@ watchEffect(async () => {
 
   showLoading.value = true;
   try {
-    const result = await $fetch<UrlInfo[]>(`/api/contentsList?prefix=${prefix.value}`);
-    urls.value = result;
+    const { data: result } = await useFetch<UrlInfo[]>('/contentsList', {
+      baseURL: config.public.apiBase,
+      query: {
+        prefix: prefix.value,
+      },
+    });
+    urls.value = result.value!;
   } finally {
     showLoading.value = false;
   }

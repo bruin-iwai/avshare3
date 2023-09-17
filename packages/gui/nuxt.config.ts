@@ -17,6 +17,12 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/eslint-module'],
 
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
+    },
+  },
+
   ssr: false,
 
   vite: {
