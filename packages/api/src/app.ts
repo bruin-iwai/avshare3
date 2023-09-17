@@ -25,7 +25,11 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/', apiRouter);
+app.get('/', (req, res) => {
+  res.send('Hello world');
+});
+
+app.use('/api', apiRouter);
 
 // app.listen(port, () => {
 //   console.log(`App started on port ${port}`);
