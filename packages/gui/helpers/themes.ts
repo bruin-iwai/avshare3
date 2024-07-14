@@ -1,4 +1,4 @@
-import { ThemeDefinition } from 'vuetify';
+import type { ThemeDefinition } from 'vuetify';
 
 // テーマ名
 export const MAIN_THEME = 'mainTheme';

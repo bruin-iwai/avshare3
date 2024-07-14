@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 /* global ref, watchEffect, useFetch, useRuntimeConfig */
-import { UrlInfo } from '@avshare3/api/src/api/indexSchema';
+import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
 
 // get config
 const config = useRuntimeConfig();
@@ -41,7 +41,6 @@ const urls = ref<UrlInfo[]>([]);
 const showLoading = ref(false);
 
 // watch effects
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 watchEffect(async () => {
   // guard condition
   if (!prefix.value) {
