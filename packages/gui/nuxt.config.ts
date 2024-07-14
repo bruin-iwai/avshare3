@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxtjs/eslint-module'],
+  modules: ['@nuxt/eslint'],
 
   runtimeConfig: {
     public: {

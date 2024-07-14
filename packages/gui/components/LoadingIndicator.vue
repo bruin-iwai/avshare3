@@ -1,9 +1,9 @@
 <template>
   <div v-if="show" class="loading-container">
-    <div class="loading-backdrop"></div>
+    <div class="loading-backdrop" />
     <div class="loading">
       <div class="loading-icon">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>

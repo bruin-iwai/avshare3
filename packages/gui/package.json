@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "lint": "npx eslint .",
     "clean": "nuxi cleanup",
     "dev": "nuxi dev",
     "build": "nuxi build",
