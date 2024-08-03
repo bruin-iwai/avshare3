@@ -5,7 +5,7 @@ import { generateSignedUrl } from '~/api/generateSignedUrl';
 jest.mock('@aws-sdk/s3-request-presigner', () => ({
   getSignedUrl: jest.fn(),
 }));
-const mockedGetSignedUrl = getSignedUrl as jest.MockedFunction<typeof getSignedUrl>;
+const mockedGetSignedUrl = jest.mocked(getSignedUrl);
 
 jest.mock('@aws-sdk/client-s3');
 const mockedS3Client = S3Client as jest.MockedClass<typeof S3Client>;

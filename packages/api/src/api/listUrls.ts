@@ -1,8 +1,8 @@
 import { S3, GetObjectCommand } from '@aws-sdk/client-s3';
-import { generateSignedUrl } from '~/api/generateSignedUrl';
-import { IndexSchema, UrlInfo } from '~/api/indexSchema';
+import { generateSignedUrl } from './generateSignedUrl';
+import type { IndexSchema, UrlInfo } from './indexSchema';
 
-export const listUrls = async (bucket: string, prefix: string): Promise<UrlInfo[]> => {
+export const listUrls = async (bucket: string, prefix: string) => {
   // S3からindex.jsonをダウンロード
   const client = new S3({});
   const command = new GetObjectCommand({

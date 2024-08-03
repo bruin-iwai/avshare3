@@ -6,7 +6,7 @@ import { listUrls } from '~/api/listUrls';
 import { generateSignedUrl } from '~/api/generateSignedUrl';
 
 jest.mock('~/api/generateSignedUrl');
-const mockedGenerateSignedUrl = generateSignedUrl as jest.MockedFunction<typeof generateSignedUrl>;
+const mockedGenerateSignedUrl = jest.mocked(generateSignedUrl);
 
 const s3Mock = mockClient(S3Client);
 

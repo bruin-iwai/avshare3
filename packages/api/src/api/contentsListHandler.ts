@@ -1,17 +1,10 @@
-import { RequestHandler } from 'express';
-import { UrlInfo, QueryParam } from '~/api/indexSchema';
-import { listUrls } from '~/api/listUrls';
+import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { QueryParam } from './indexSchema';
+import { listUrls } from './listUrls';
 
-export const contentsListHandler: RequestHandler<unknown, UrlInfo[], unknown, QueryParam> = (
-  req,
-  res,
-  next,
-) => {
-  (async () => {
-    const { prefix } = req.query;
-    const bucket = process.env.BUCKET_NAME as string;
-    const urls = await listUrls(bucket, prefix);
-    res.json(urls);
-    next();
-  })().catch(next);
+export const contentsListHandler = async (request: FastifyRequest, _reply: FastifyReply) => {
+  const { prefix } = request.query as QueryParam;
+  const bucket = process.env.BUCKET_NAME!;
+  const urls = await listUrls(bucket, prefix);
+  return { urls };
 };
