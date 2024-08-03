@@ -25,6 +25,10 @@ export default defineNuxtConfig({
 
   ssr: false,
 
+  typescript: {
+    typeCheck: true,
+  },
+
   vite: {
     ssr: {
       noExternal: ['vuetify'],
