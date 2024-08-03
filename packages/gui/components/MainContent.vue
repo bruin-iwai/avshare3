@@ -36,9 +36,9 @@ import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
 const config = useRuntimeConfig();
 
 // states
-const prefix = ref('');
-const urls = ref<UrlInfo[]>([]);
-const showLoading = ref(false);
+const prefix = usePrefix();
+const urls = useUrls();
+const showLoading = useShowLoading();
 
 // watch effects
 watchEffect(async () => {
