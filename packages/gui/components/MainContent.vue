@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-/* global ref, watchEffect, useFetch, useRuntimeConfig */
 import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
 
 // get config
