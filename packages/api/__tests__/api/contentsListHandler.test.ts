@@ -1,10 +1,9 @@
-import type { Request, Response } from 'express';
 import { contentsListHandler } from '~/api/contentsListHandler';
 import { listUrls } from '~/api/listUrls';
-import { UrlInfo, QueryParam } from '~/api/indexSchema';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 jest.mock('~/api/listUrls');
-const mockedListUrls = listUrls as jest.MockedFunction<typeof listUrls>;
+const mockedListUrls = jest.mocked(listUrls);
 
 describe('handler', () => {
   beforeEach(() => {
@@ -20,10 +19,7 @@ describe('handler', () => {
       query: {
         prefix: 'bb',
       },
-    } as unknown as Request<unknown, UrlInfo[], unknown, QueryParam>;
-    const resMock = {
-      json: jest.fn().mockReturnThis(),
-    } as unknown as Response<UrlInfo[]>;
+    } as unknown as FastifyRequest;
 
     mockedListUrls.mockResolvedValueOnce([
       {
@@ -36,27 +32,20 @@ describe('handler', () => {
       },
     ]);
 
-    await new Promise<void>((resolve, reject) => {
-      contentsListHandler(reqMock, resMock, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
+    const ret = await contentsListHandler(reqMock, {} as unknown as FastifyReply);
 
-    expect(resMock.json).toHaveBeenCalledTimes(1);
-    expect(resMock.json).toHaveBeenCalledWith([
-      {
-        url: 'https://dummy1',
-        title: 'ああ',
-      },
-      {
-        url: 'https://dummy2',
-        title: 'いい',
-      },
-    ]);
+    expect(ret).toEqual({
+      urls: [
+        {
+          url: 'https://dummy1',
+          title: 'ああ',
+        },
+        {
+          url: 'https://dummy2',
+          title: 'いい',
+        },
+      ],
+    });
 
     expect(listUrls).toHaveBeenCalledTimes(1);
     expect(listUrls).toHaveBeenCalledWith(process.env.BUCKET_NAME, 'bb');

@@ -1,11 +1,7 @@
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 
-export const generateSignedUrl = async (
-  bucket: string,
-  prefix: string,
-  file: string,
-): Promise<string> => {
+export const generateSignedUrl = async (bucket: string, prefix: string, file: string) => {
   const client = new S3Client({});
   const command = new GetObjectCommand({
     Bucket: bucket,

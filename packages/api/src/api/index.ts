@@ -1,6 +1,19 @@
-import express from 'express';
-import { contentsListHandler } from '~/api/contentsListHandler';
+import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { contentsListHandler } from './contentsListHandler';
 
-export const apiRouter = express.Router();
-
-apiRouter.get('/contentsList', contentsListHandler);
+export async function apiRouter(fastify: FastifyInstance, _opts: FastifyPluginOptions) {
+  fastify.get(
+    '/contentsList',
+    {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            prefix: { type: 'string' },
+          },
+        },
+      },
+    },
+    contentsListHandler,
+  );
+}
