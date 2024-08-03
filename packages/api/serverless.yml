@@ -29,6 +29,8 @@ custom:
   prune:
     automatic: true
     number: 3
+  esbuild:
+    format: esm
 
 functions:
   handler:

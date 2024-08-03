@@ -1,5 +1,5 @@
 import { ServerlessAdapter } from '@h4ad/serverless-adapter';
-import { FastifyFramework } from '@h4ad/serverless-adapter/lib/frameworks/fastify';
+import { FastifyFramework } from '@h4ad/serverless-adapter/frameworks/fastify';
 import { DefaultHandler } from '@h4ad/serverless-adapter/handlers/default';
 import { PromiseResolver } from '@h4ad/serverless-adapter/resolvers/promise';
 import { ApiGatewayV2Adapter } from '@h4ad/serverless-adapter/adapters/aws';
