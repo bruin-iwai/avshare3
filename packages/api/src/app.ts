@@ -7,9 +7,9 @@ import { apiRouter } from '~/api';
 
 const app = Fastify();
 
-await app.register(fastifyHelmet);
-await app.register(fastifyCors);
-await app.register(fastifyCompress);
+app.register(fastifyHelmet);
+app.register(fastifyCors);
+app.register(fastifyCompress);
 
 // basic auth
 app.register(fastifyBasicAuth, {

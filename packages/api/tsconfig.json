@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "Preserve",
+    "module": "esnext",
     "moduleResolution": "Bundler",
     "paths": {
       "~/*": [
