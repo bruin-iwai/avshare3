@@ -29,16 +29,15 @@
 </template>
 
 <script setup lang="ts">
-/* global ref, watchEffect, useFetch, useRuntimeConfig */
 import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
 
 // get config
 const config = useRuntimeConfig();
 
 // states
-const prefix = ref('');
-const urls = ref<UrlInfo[]>([]);
-const showLoading = ref(false);
+const prefix = usePrefix();
+const urls = useUrls();
+const showLoading = useShowLoading();
 
 // watch effects
 watchEffect(async () => {
