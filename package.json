@@ -41,7 +41,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "^7.18.0",
-    "vite-plugin-vuetify": "^1.0.2"
+    "vite-plugin-vuetify": "^1.0.2",
+    "vue-tsc": "^2.0.29"
   },
   "workspaces": [
     "packages/*"
