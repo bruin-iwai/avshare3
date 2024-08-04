@@ -155,3 +155,4 @@ node_modules
 # End of https://www.toptal.com/developers/gitignore/api/node,nuxtjs
 
 .bashrc
+.aws-sam

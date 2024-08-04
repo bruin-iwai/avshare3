@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  avshare3-api
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Architectures:
+      - x86_64
+    MemorySize: 512
+    Runtime: nodejs18.x
+    Timeout: 30
+    Tracing: Active
+Resources:
+  MyFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      FunctionUrlConfig:
+        AuthType: NONE
+      Policies:
+        - S3ReadPolicy:
+            BucketName: jp-live-bruin-iwai-audio-video
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:avshare3/credentials-Yo1vTK
+      Environment:
+        Variables:
+          BUCKET_NAME: jp-live-bruin-iwai-audio-video
+          SECRET_ID: avshare3/credentials
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - index.ts
+        External:
+          - '@aws-sdk'
+
+  ApplicationResourceGroup:
+    Type: AWS::ResourceGroups::Group
+    Properties:
+      Name: !Sub ApplicationInsights-SAM-${AWS::StackName}
+      ResourceQuery:
+        Type: CLOUDFORMATION_STACK_1_0
+  ApplicationInsightsMonitoring:
+    Type: AWS::ApplicationInsights::Application
+    Properties:
+      ResourceGroupName: !Ref ApplicationResourceGroup
+      AutoConfigurationEnabled: true
+Outputs:
+  MyFunction:
+    Description: My Lambda Function ARN
+    Value: !GetAtt MyFunction.Arn
+  MyFunctionIamRole:
+    Description: Implicit IAM Role created for my function
+    Value: !GetAtt MyFunctionRole.Arn
+  MyFunctionUrl:
+    Description: My Lambda Function URL
+    Value: !GetAtt MyFunctionUrl.FunctionUrl
+
