@@ -16,3 +16,8 @@ export interface UrlInfo {
 export interface QueryParam {
   prefix: string;
 }
+
+export interface SecretCredentials {
+  username: string;
+  password: string;
+}

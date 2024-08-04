@@ -3,9 +3,9 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { sdkStreamMixin } from '@smithy/util-stream';
 import { mockClient } from 'aws-sdk-client-mock';
 import { listUrls } from '~/api/listUrls';
-import { generateSignedUrl } from '~/api/generateSignedUrl';
+import { generateSignedUrl } from '~/repositories/generateSignedUrl';
 
-jest.mock('~/api/generateSignedUrl');
+jest.mock('~/repositories/generateSignedUrl');
 const mockedGenerateSignedUrl = jest.mocked(generateSignedUrl);
 
 const s3Mock = mockClient(S3Client);
@@ -60,7 +60,7 @@ describe('listUrls', () => {
     ]);
 
     expect(generateSignedUrl).toHaveBeenCalledTimes(2);
-    expect(generateSignedUrl).toHaveBeenNthCalledWith(1, 'bucket1', 'prefix1', 'aa.mp4');
-    expect(generateSignedUrl).toHaveBeenNthCalledWith(2, 'bucket1', 'prefix1', 'bb.mp4');
+    expect(generateSignedUrl).toHaveBeenNthCalledWith(1, 'bucket1', 'prefix1/aa.mp4');
+    expect(generateSignedUrl).toHaveBeenNthCalledWith(2, 'bucket1', 'prefix1/bb.mp4');
   });
 });
