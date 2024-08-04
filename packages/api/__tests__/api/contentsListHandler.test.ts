@@ -20,10 +20,10 @@ describe('handler', () => {
       query: {
         prefix: 'bb',
       },
-    } as unknown as Request<void, { urls: UrlInfo[] }, unknown, QueryParam>;
+    } as unknown as Request<void, UrlInfo[], unknown, QueryParam>;
     const resMock = {
       json: jest.fn(),
-    } as unknown as Response<{ urls: UrlInfo[] }>;
+    } as unknown as Response<UrlInfo[]>;
 
     mockedListUrls.mockResolvedValueOnce([
       {
@@ -38,18 +38,16 @@ describe('handler', () => {
 
     contentsListHandler(reqMock, resMock, () => {
       expect(resMock.json).toHaveBeenCalledTimes(1);
-      expect(resMock.json).toHaveBeenCalledWith({
-        urls: [
-          {
-            url: 'https://dummy1',
-            title: 'ああ',
-          },
-          {
-            url: 'https://dummy2',
-            title: 'いい',
-          },
-        ],
-      });
+      expect(resMock.json).toHaveBeenCalledWith([
+        {
+          url: 'https://dummy1',
+          title: 'ああ',
+        },
+        {
+          url: 'https://dummy2',
+          title: 'いい',
+        },
+      ]);
 
       expect(listUrls).toHaveBeenCalledTimes(1);
       expect(listUrls).toHaveBeenCalledWith(process.env.BUCKET_NAME, 'bb');
