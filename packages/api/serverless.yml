@@ -29,6 +29,9 @@ custom:
   prune:
     automatic: true
     number: 3
+  esbuild:
+    external:
+      - '@aws-sdk'
 
 functions:
   handler:
