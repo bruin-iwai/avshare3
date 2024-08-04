@@ -1,34 +1,29 @@
-import Fastify from 'fastify';
-import fastifyHelmet from '@fastify/helmet';
-import fastifyCors from '@fastify/cors';
-import fastifyCompress from '@fastify/compress';
-import fastifyBasicAuth from '@fastify/basic-auth';
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import expressBasicAuth, { safeCompare } from 'express-basic-auth';
 import { apiRouter } from '~/api';
 
-const app = Fastify();
+export const app = express();
 
-app.register(fastifyHelmet);
-app.register(fastifyCors);
-app.register(fastifyCompress);
+app.use(helmet());
+app.use(cors());
+app.use(compression());
 
 // basic auth
-app.register(fastifyBasicAuth, {
-  authenticate: {
-    realm: 'avshare3',
-  },
-  validate(username, password, _req, _reply, done) {
-    if (username === process.env.USERNAME && password === process.env.PASSWORD) {
-      done();
-    } else {
-      done(new Error('Credentials mismatch'));
-    }
-  },
+app.use(
+  expressBasicAuth({
+    authorizer(username: string, password: string) {
+      const userMatches = safeCompare(username, process.env.USERNAME ?? '');
+      const passwordMatches = safeCompare(password, process.env.PASSWORD ?? '');
+      return userMatches && passwordMatches;
+    },
+  }),
+);
+
+app.get('/', (_req, res) => {
+  res.send('Hello world');
 });
 
-app.get('/', async (_request, _reply) => {
-  return { message: 'Hello world' };
-});
-
-app.register(apiRouter, { prefix: '/api' });
-
-export { app };
+app.use('/api', apiRouter);
