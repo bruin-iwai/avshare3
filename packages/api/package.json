@@ -6,7 +6,7 @@
     "start": "ts-node -r tsconfig-paths/register src/standalone.ts",
     "lint": "npx eslint .",
     "sam": "sam",
-    "sam:build": "sam build --use-container",
+    "sam:build": "sam build",
     "sam:deploy": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset",
     "builddeploy": "run-s sam:build sam:deploy"
   },
