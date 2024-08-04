@@ -2,7 +2,7 @@ import type { RequestHandler } from 'express';
 import type { QueryParam, UrlInfo } from './indexSchema';
 import { listUrls } from './listUrls';
 
-export const contentsListHandler: RequestHandler<void, { urls: UrlInfo[] }, unknown, QueryParam> = (
+export const contentsListHandler: RequestHandler<void, UrlInfo[], unknown, QueryParam> = (
   req,
   res,
   next,
@@ -11,7 +11,7 @@ export const contentsListHandler: RequestHandler<void, { urls: UrlInfo[] }, unkn
     const { prefix } = req.query;
     const bucket = process.env.BUCKET_NAME!;
     const urls = await listUrls(bucket, prefix);
-    res.json({ urls });
+    res.json(urls);
 
     // call next() for unit test
     next();
