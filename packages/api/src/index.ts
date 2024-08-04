@@ -1,12 +1,13 @@
 import { ServerlessAdapter } from '@h4ad/serverless-adapter';
-import { ExpressFramework } from '@h4ad/serverless-adapter/frameworks/express';
+import { FastifyFramework } from '@h4ad/serverless-adapter/frameworks/fastify';
+import { LazyFramework } from '@h4ad/serverless-adapter/frameworks/lazy';
 import { DefaultHandler } from '@h4ad/serverless-adapter/handlers/default';
 import { PromiseResolver } from '@h4ad/serverless-adapter/resolvers/promise';
 import { ApiGatewayV2Adapter } from '@h4ad/serverless-adapter/adapters/aws';
-import { app } from './app';
+import { createApp } from './app';
 
-export const handler = ServerlessAdapter.new(app)
-  .setFramework(new ExpressFramework())
+export const handler = ServerlessAdapter.new(null)
+  .setFramework(new LazyFramework(new FastifyFramework(), createApp))
   .setHandler(new DefaultHandler())
   .setResolver(new PromiseResolver())
   .addAdapter(new ApiGatewayV2Adapter())

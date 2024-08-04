@@ -1,4 +1,7 @@
-import { Router } from 'express';
+import type { FastifyPluginCallback } from 'fastify';
 import { contentsListHandler } from './contentsListHandler';
 
-export const apiRouter = Router().get('/contentsList', contentsListHandler);
+export const apiRouter: FastifyPluginCallback = (fastify, _opts, done) => {
+  fastify.get('/contentsList', contentsListHandler);
+  done();
+};
