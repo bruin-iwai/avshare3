@@ -5,7 +5,10 @@
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/standalone.ts",
     "lint": "npx eslint .",
-    "sam": "sam"
+    "sam": "sam",
+    "sam:build": "sam build --use-container",
+    "sam:deploy": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset",
+    "builddeploy": "run-s sam:build sam:deploy"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.623.0",
