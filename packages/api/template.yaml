@@ -22,12 +22,12 @@ Resources:
         AuthType: NONE
       Policies:
         - S3ReadPolicy:
-            BucketName: jp-live-bruin-iwai-audio-video
+            BucketName: com-gmail-bruinawsuser-audio-video
         - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:avshare3/credentials-Yo1vTK
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:avshare3/credentials-T69env
       Environment:
         Variables:
-          BUCKET_NAME: jp-live-bruin-iwai-audio-video
+          BUCKET_NAME: com-gmail-bruinawsuser-audio-video
           SECRET_ID: avshare3/credentials
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
