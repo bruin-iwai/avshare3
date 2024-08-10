@@ -19,7 +19,7 @@ Resources:
       CodeUri: src/
       Handler: index.handler
       FunctionUrlConfig:
-        AuthType: NONE
+        AuthType: AWS_IAM
       Policies:
         - S3ReadPolicy:
             BucketName: com-gmail-bruinawsuser-audio-video
