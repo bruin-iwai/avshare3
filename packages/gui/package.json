@@ -9,7 +9,9 @@
     "build": "nuxi build",
     "start": "nuxi preview",
     "generate": "nuxi generate",
-    "nuxi": "nuxi"
+    "nuxi": "nuxi",
+    "sync": "aws s3 sync .output/public/ s3://${BUCKET_FRONTEND}/",
+    "deploy": "run-s generate sync"
   },
   "dependencies": {
     "vuetify": "^3.6.14"

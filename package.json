@@ -9,8 +9,8 @@
     "start": "npm run start -w @avshare3/api",
     "test": "jest",
     "prepare": "husky install",
-    "testall": "npm run format && npm run lint && npm test",
-    "deploy:gui": "npm run generate -w @avshare3/gui && aws s3 sync packages/gui/dist/ s3://${BUCKET_FRONTEND}/",
+    "testall": "run-s format lint test",
+    "deploy:gui": "npm run deploy -w @avshare3/gui",
     "deploy:api": "npm run builddeploy -w @avshare3/api"
   },
   "devDependencies": {
