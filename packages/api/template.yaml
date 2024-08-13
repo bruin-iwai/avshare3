@@ -20,6 +20,9 @@ Resources:
       Handler: index.handler
       FunctionUrlConfig:
         AuthType: AWS_IAM
+        Cors:
+          AllowOrigins:
+            - '*'
       Policies:
         - S3ReadPolicy:
             BucketName: com-gmail-bruinawsuser-audio-video
