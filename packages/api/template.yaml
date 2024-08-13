@@ -26,6 +26,7 @@ Resources:
       Environment:
         Variables:
           BUCKET_NAME: com-gmail-bruinawsuser-audio-video
+      AutoPublishAlias: current
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
