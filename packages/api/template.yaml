@@ -26,12 +26,12 @@ Resources:
       Environment:
         Variables:
           BUCKET_NAME: com-gmail-bruinawsuser-audio-video
-      AutoPublishAlias: current
-      DeploymentPreference:
-        Type: AllAtOnce
-        Alarms:
-          - !Ref AliasErrorMetricGreaterThanZeroAlarm
-          - !Ref LatestVersionErrorMetricGreaterThanZeroAlarm
+      # AutoPublishAlias: current
+      # DeploymentPreference:
+      #   Type: AllAtOnce
+      #   Alarms:
+      #     - !Ref AliasErrorMetricGreaterThanZeroAlarm
+      #     - !Ref LatestVersionErrorMetricGreaterThanZeroAlarm
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
@@ -43,41 +43,41 @@ Resources:
         External:
           - '@aws-sdk'
 
-  AliasErrorMetricGreaterThanZeroAlarm:
-    Type: "AWS::CloudWatch::Alarm"
-    Properties:
-      AlarmDescription: Lambda Function Error > 0
-      ComparisonOperator: GreaterThanThreshold
-      Dimensions:
-        - Name: Resource
-          Value: !Sub "${MyFunction}:current"
-        - Name: FunctionName
-          Value: !Ref MyFunction
-      EvaluationPeriods: 2
-      MetricName: Errors
-      Namespace: AWS/Lambda
-      Period: 60
-      Statistic: Sum
-      Threshold: 0
+  # AliasErrorMetricGreaterThanZeroAlarm:
+  #   Type: "AWS::CloudWatch::Alarm"
+  #   Properties:
+  #     AlarmDescription: Lambda Function Error > 0
+  #     ComparisonOperator: GreaterThanThreshold
+  #     Dimensions:
+  #       - Name: Resource
+  #         Value: !Sub "${MyFunction}:current"
+  #       - Name: FunctionName
+  #         Value: !Ref MyFunction
+  #     EvaluationPeriods: 2
+  #     MetricName: Errors
+  #     Namespace: AWS/Lambda
+  #     Period: 60
+  #     Statistic: Sum
+  #     Threshold: 0
 
-  LatestVersionErrorMetricGreaterThanZeroAlarm:
-    Type: "AWS::CloudWatch::Alarm"
-    Properties:
-      AlarmDescription: Lambda Function Error > 0
-      ComparisonOperator: GreaterThanThreshold
-      Dimensions:
-        - Name: Resource
-          Value: !Sub "${MyFunction}:current"
-        - Name: FunctionName
-          Value: !Ref MyFunction
-        - Name: ExecutedVersion
-          Value: !GetAtt MyFunction.Version.Version
-      EvaluationPeriods: 2
-      MetricName: Errors
-      Namespace: AWS/Lambda
-      Period: 60
-      Statistic: Sum
-      Threshold: 0
+  # LatestVersionErrorMetricGreaterThanZeroAlarm:
+  #   Type: "AWS::CloudWatch::Alarm"
+  #   Properties:
+  #     AlarmDescription: Lambda Function Error > 0
+  #     ComparisonOperator: GreaterThanThreshold
+  #     Dimensions:
+  #       - Name: Resource
+  #         Value: !Sub "${MyFunction}:current"
+  #       - Name: FunctionName
+  #         Value: !Ref MyFunction
+  #       - Name: ExecutedVersion
+  #         Value: !GetAtt MyFunction.Version.Version
+  #     EvaluationPeriods: 2
+  #     MetricName: Errors
+  #     Namespace: AWS/Lambda
+  #     Period: 60
+  #     Statistic: Sum
+  #     Threshold: 0
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
