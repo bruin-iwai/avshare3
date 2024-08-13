@@ -1,6 +1,5 @@
 import Fastify from 'fastify';
 import fastifyHelmet from '@fastify/helmet';
-import fastifyCors from '@fastify/cors';
 import fastifyCompress from '@fastify/compress';
 import { apiRouter } from '~/api';
 
@@ -10,7 +9,6 @@ export const createApp = async () => {
   });
 
   fastify.register(fastifyHelmet);
-  await fastify.register(fastifyCors);
   await fastify.register(fastifyCompress);
 
   fastify.after(() => {
