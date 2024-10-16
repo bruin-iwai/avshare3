@@ -16,7 +16,6 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: aws-actions/setup-sam@v2
     - run: npm ci
     - uses: aws-actions/configure-aws-credentials@v4
       with:
