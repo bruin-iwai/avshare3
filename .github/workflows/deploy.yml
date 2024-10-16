@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - fix/remove-aws-sam-cli-install-procedure-from-gha
 jobs:
   deploy_api:
     runs-on: ubuntu-latest
