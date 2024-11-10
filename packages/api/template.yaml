@@ -9,7 +9,7 @@ Globals:
     Architectures:
       - x86_64
     MemorySize: 512
-    Runtime: nodejs18.x
+    Runtime: nodejs20.x
     Timeout: 30
     Tracing: Active
 Resources:
