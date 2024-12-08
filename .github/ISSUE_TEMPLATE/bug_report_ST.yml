@@ -14,6 +14,8 @@ body:
     attributes:
       label: 事象（概要）
       description: どのような事象が起こっているのかを記載する
+      value: |
+        -
     validations:
       required: true
   - type: textarea
@@ -21,13 +23,17 @@ body:
     attributes:
       label: 詳細・補足
       description: ログ、エラーメッセージ、SentryURL、などはこちらに
+      value: |
+        -
     validations:
       required: false
-  - type: input
+  - type: textarea
     id: test-item
     attributes:
       label: 該当試験
       description: 事象を発生させた試験のIDなど
+      value: |
+        -
     validations:
       required: false
   - type: textarea
