@@ -1,0 +1,41 @@
+name: ST bug report
+description: 開発PJ_システムテストフェーズ用
+title: 'Bug: '
+labels: ["bug"]
+projects: ["projects/346"]
+# assignees:
+#   - octocat
+body:
+  - type: markdown
+    attributes:
+      value: '## バグについて'
+  - type: textarea
+    id: phenomena
+    attributes:
+      label: 事象（概要）
+      description: どのような事象が起こっているのかを記載する
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: 詳細・補足
+      description: ログ、エラーメッセージ、SentryURL、などはこちらに
+    validations:
+      required: false
+  - type: input
+    id: test-item
+    attributes:
+      label: 該当試験
+      description: 事象を発生させた試験のIDなど
+    validations:
+      required: false
+  - type: textarea
+    id: definition-of-done
+    attributes:
+      label: 完了条件
+      value: |
+        - [ ] 該当再試験に合格すること
+        - [ ]
+    validations:
+      required: true
