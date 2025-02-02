@@ -1,9 +1,28 @@
-on:
-  push:
-    branches:
-      - main
+on: push
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
+  test:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+    - run: npm ci
+    - run: npm run build --if-present --workspaces
+    - run: npm run testall
+
   deploy_api:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [test]
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -21,6 +40,9 @@ jobs:
     - run: npm run deploy:api
 
   deploy_gui:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [test]
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     permissions:
       id-token: write
