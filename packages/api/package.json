@@ -11,8 +11,8 @@
     "builddeploy": "run-s sam:build sam:deploy"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.629.0",
-    "@aws-sdk/s3-request-presigner": "^3.629.0",
+    "@aws-sdk/client-s3": "^3.740.0",
+    "@aws-sdk/s3-request-presigner": "^3.740.0",
     "@fastify/compress": "^7.0.3",
     "@fastify/helmet": "^11.1.1",
     "@h4ad/serverless-adapter": "^4.2.1",
