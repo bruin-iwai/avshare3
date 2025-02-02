@@ -8,14 +8,11 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version-file: .nvmrc
     - run: npm ci
     - uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -28,14 +25,11 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version-file: .nvmrc
     - run: npm ci
     - uses: aws-actions/configure-aws-credentials@v4
       with:
