@@ -26,32 +26,31 @@ export const createApp = async () => {
   });
   await fastify.register(fastifySwaggerUi, {
     routePrefix: '/api/docs',
+    logo: { type: '', content: '' },
   });
 
-  fastify.after(() => {
-    fastify.get(
-      '/',
-      {
-        schema: {
-          summary: 'Hello world',
-          tags: ['general'],
-          response: {
-            '200': {
-              type: 'object',
-              properties: {
-                message: { type: 'string' },
-              },
+  fastify.get(
+    '/',
+    {
+      schema: {
+        summary: 'Hello world',
+        tags: ['general'],
+        response: {
+          '200': {
+            type: 'object',
+            properties: {
+              message: { type: 'string' },
             },
           },
         },
       },
-      async (_req, _reply) => {
-        return { message: 'Hello world' };
-      },
-    );
+    },
+    async (_req, _reply) => {
+      return { message: 'Hello world' };
+    },
+  );
 
-    fastify.register(apiRouter, { prefix: '/api' });
-  });
+  fastify.register(apiRouter, { prefix: '/api' });
 
   return fastify;
 };
