@@ -42,6 +42,8 @@ Resources:
           - index.ts
         External:
           - '@aws-sdk'
+          - '@fastify/swagger'
+          - '@fastify/swagger-ui'
 
   # AWS::Serverless::Function の FunctionUrlConfig ではエイリアス (Qualifier) 込みの Function URL を定義できないため
   # 明示的に AWS::Lambda::Url リソースとして宣言する

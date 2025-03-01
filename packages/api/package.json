@@ -8,7 +8,10 @@
     "sam": "sam",
     "sam:build": "sam build",
     "sam:deploy": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset",
-    "builddeploy": "run-s sam:build sam:deploy"
+    "builddeploy": "run-s sam:build custombuild sam:deploy",
+    "buildlocal": "node build.mjs",
+    "startlocal": "node dist/index.js",
+    "custombuild": "./build.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
