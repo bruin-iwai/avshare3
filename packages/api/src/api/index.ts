@@ -1,54 +1,15 @@
-import type { FastifyPluginAsyncJsonSchemaToTs } from '@fastify/type-provider-json-schema-to-ts';
-import type { JSONSchema } from 'json-schema-to-ts/lib/types/definitions';
+import type { FastifyPluginAsync } from 'fastify';
 import { fetchContentsList } from '~/services/fetchContentsList';
+import {
+  ErrorInfo,
+  type ErrorInfoType,
+  QueryParam,
+  type QueryParamType,
+  UrlInfoList,
+  type UrlInfoListType,
+} from '~/types';
 
-const schemaQueryParam = {
-  $id: 'schema:QueryParam',
-  type: 'object',
-  properties: {
-    prefix: { type: 'string' },
-  },
-  additionalProperties: false,
-  required: ['prefix'],
-} as const satisfies JSONSchema;
-
-const schemaUrlInfoList = {
-  $id: 'schema:UrlInfoList',
-  description: 'Successful response',
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      url: { type: 'string' },
-      title: { type: 'string' },
-    },
-    additionalProperties: false,
-    required: ['url', 'title'],
-  },
-} as const satisfies JSONSchema;
-
-const schemaErrorInfo = {
-  $id: 'schema:ErrorInfo',
-  description: 'Error response',
-  type: 'object',
-  properties: {
-    statusCode: { type: 'number' },
-    error: { type: 'string' },
-    message: { type: 'string' },
-  },
-  additionalProperties: false,
-} as const satisfies JSONSchema;
-
-export const apiRouter: FastifyPluginAsyncJsonSchemaToTs<{
-  ValidatorSchemaOptions: {
-    references: [typeof schemaQueryParam];
-  };
-  SerializerSchemaOptions: {
-    references: [typeof schemaUrlInfoList, typeof schemaErrorInfo];
-  };
-}> = async (fastify, _opts) => {
-  fastify.addSchema(schemaQueryParam).addSchema(schemaUrlInfoList).addSchema(schemaErrorInfo);
-
+export const apiRouter: FastifyPluginAsync = async (fastify, _opts) => {
   fastify.get(
     '/',
     {
@@ -70,22 +31,19 @@ export const apiRouter: FastifyPluginAsyncJsonSchemaToTs<{
     },
   );
 
-  fastify.get(
+  fastify.get<{
+    Querystring: QueryParamType;
+    Reply: UrlInfoListType | ErrorInfoType;
+  }>(
     '/contentsList',
     {
       schema: {
         summary: 'Get contents list',
         tags: ['general'],
-        querystring: {
-          $ref: 'schema:QueryParam',
-        },
+        querystring: QueryParam,
         response: {
-          '200': {
-            $ref: 'schema:UrlInfoList',
-          },
-          default: {
-            $ref: 'schema:ErrorInfo',
-          },
+          '200': UrlInfoList,
+          default: ErrorInfo,
         },
       },
     },

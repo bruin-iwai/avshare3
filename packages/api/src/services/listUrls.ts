@@ -1,5 +1,5 @@
 import { generateSignedUrl, getS3Object } from '~/repositories';
-import type { IndexSchema, UrlInfo } from '~/types';
+import type { IndexSchema, UrlInfoListType } from '~/types';
 
 export const listUrls = async (bucket: string, prefix: string) => {
   // S3からindex.jsonをダウンロード
@@ -7,7 +7,7 @@ export const listUrls = async (bucket: string, prefix: string) => {
   const index = JSON.parse(data) as IndexSchema;
 
   // index.jsonのfiles[].{file, title}を取得し、fileをsingedUrlに変換する
-  const urls: UrlInfo[] = [];
+  const urls: UrlInfoListType = [];
   for (let i = 0; i < index.files.length; i++) {
     const item = index.files[i];
     const url = await generateSignedUrl(bucket, `${prefix}/${item.file}`);
