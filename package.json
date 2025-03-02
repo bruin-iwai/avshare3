@@ -11,7 +11,8 @@
     "prepare": "husky",
     "testall": "run-s format lint test",
     "deploy:gui": "npm run deploy -w @avshare3/gui",
-    "deploy:api": "npm run builddeploy -w @avshare3/api"
+    "build:api": "npm run build -w @avshare3/api",
+    "deploy:api": "npm run deploy -w @avshare3/api"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

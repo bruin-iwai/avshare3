@@ -13,19 +13,32 @@ Globals:
     Timeout: 30
     Tracing: Active
 
+Parameters:
+  MyDistributionId:
+    Type: String
+  BucketBackend:
+    Type: String
+  DeletionPolicyParam:
+    Type: String
+    AllowedValues:
+      - Delete
+      - Retain
+      - Snapshot
+    Default: Retain
+
 Resources:
   MyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    DeletionPolicy: Retain
+    DeletionPolicy: !Ref DeletionPolicyParam
     Properties:
       CodeUri: src/
       Handler: index.handler
       Policies:
         - S3ReadPolicy:
-            BucketName: com-gmail-bruinawsuser-audio-video
+            BucketName: !Ref BucketBackend
       Environment:
         Variables:
-          BUCKET_NAME: com-gmail-bruinawsuser-audio-video
+          BUCKET_NAME: !Ref BucketBackend
       AutoPublishAlias: current
       DeploymentPreference:
         Type: AllAtOnce
@@ -57,6 +70,15 @@ Resources:
           - '*'
       Qualifier: current
       TargetFunctionArn: !GetAtt MyFunction.Arn
+
+  MyFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunctionUrl
+      FunctionName: !Sub "${MyFunction}:current"
+      FunctionUrlAuthType: AWS_IAM
+      Principal: cloudfront.amazonaws.com
+      SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${MyDistributionId}"
 
   AliasErrorMetricGreaterThanZeroAlarm:
     Type: "AWS::CloudWatch::Alarm"
