@@ -1,5 +1,5 @@
 import { generateSignedUrl, getS3Object } from '~/repositories';
-import type { IndexSchema, UrlInfo } from './indexSchema';
+import type { IndexSchema, UrlInfo } from '~/types';
 
 export const listUrls = async (bucket: string, prefix: string) => {
   // S3からindex.jsonをダウンロード

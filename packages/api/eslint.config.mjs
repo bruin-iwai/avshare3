@@ -6,7 +6,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['.aws-sam/**'],
+    ignores: ['.aws-sam/**', 'dist/**'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

@@ -2,7 +2,7 @@ import { Readable } from 'node:stream';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { sdkStreamMixin } from '@smithy/util-stream';
 import { mockClient } from 'aws-sdk-client-mock';
-import { listUrls } from '~/api/listUrls';
+import { listUrls } from '~/services/listUrls';
 import { generateSignedUrl } from '~/repositories/generateSignedUrl';
 
 jest.mock('~/repositories/generateSignedUrl');
