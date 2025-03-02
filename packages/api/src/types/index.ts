@@ -12,7 +12,3 @@ export interface UrlInfo {
   url: string;
   title: string;
 }
-
-export interface QueryParam {
-  prefix: string;
-}

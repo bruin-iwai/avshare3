@@ -1,11 +1,10 @@
-import type { FastifyReply, FastifyRequest } from 'fastify';
-import { contentsListHandler } from '~/api/contentsListHandler';
-import { listUrls } from '~/api/listUrls';
+import { fetchContentsList } from '~/services/fetchContentsList';
+import { listUrls } from '~/services/listUrls';
 
-jest.mock('~/api/listUrls');
+jest.mock('~/services/listUrls');
 const mockedListUrls = jest.mocked(listUrls);
 
-describe('handler', () => {
+describe('fetchContentsList', () => {
   beforeEach(() => {
     jest.replaceProperty(process, 'env', { BUCKET_NAME: 'aa' });
   });
@@ -14,13 +13,7 @@ describe('handler', () => {
     jest.restoreAllMocks();
   });
 
-  test('contentsListHandler', async () => {
-    const reqMock = {
-      query: {
-        prefix: 'bb',
-      },
-    } as unknown as FastifyRequest;
-
+  test('fetchContentsList', async () => {
     mockedListUrls.mockResolvedValueOnce([
       {
         url: 'https://dummy1',
@@ -32,7 +25,7 @@ describe('handler', () => {
       },
     ]);
 
-    const ret = await contentsListHandler(reqMock, {} as unknown as FastifyReply);
+    const ret = await fetchContentsList('bb');
 
     expect(ret).toEqual([
       {

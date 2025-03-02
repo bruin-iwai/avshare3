@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
+import type { UrlInfo } from '@avshare3/api/src/types';
 
 // get config
 const config = useRuntimeConfig();

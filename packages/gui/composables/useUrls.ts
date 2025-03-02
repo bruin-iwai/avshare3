@@ -1,4 +1,4 @@
-import type { UrlInfo } from '@avshare3/api/src/api/indexSchema';
+import type { UrlInfo } from '@avshare3/api/src/types';
 
 /**
  * 状態 "urls" を参照する。初期値は空配列。
