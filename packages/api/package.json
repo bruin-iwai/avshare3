@@ -12,7 +12,8 @@
     "postbuild": "./build.sh",
     "deploy": "npm run sam:deploy",
     "buildlocal": "node build.mjs",
-    "startlocal": "node dist/index.js"
+    "startlocal": "node dist/index.js",
+    "prune": "./pruneLambdaVersions.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
