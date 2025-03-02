@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UrlInfo } from '@avshare3/api/src/types';
+import type { UrlInfoListType } from '@avshare3/api/src/types';
 
 // get config
 const config = useRuntimeConfig();
@@ -48,7 +48,7 @@ watchEffect(async () => {
 
   showLoading.value = true;
   try {
-    const { data: result } = await useFetch<UrlInfo[]>('/contentsList', {
+    const { data: result } = await useFetch<UrlInfoListType>('/contentsList', {
       baseURL: config.public.apiBase,
       query: {
         prefix: prefix.value,
