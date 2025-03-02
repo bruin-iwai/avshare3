@@ -29,27 +29,6 @@ export const createApp = async () => {
     logo: { type: '', content: '' },
   });
 
-  fastify.get(
-    '/',
-    {
-      schema: {
-        summary: 'Hello world',
-        tags: ['general'],
-        response: {
-          '200': {
-            type: 'object',
-            properties: {
-              message: { type: 'string' },
-            },
-          },
-        },
-      },
-    },
-    async (_req, _reply) => {
-      return { message: 'Hello world' };
-    },
-  );
-
   fastify.register(apiRouter, { prefix: '/api' });
 
   return fastify;
