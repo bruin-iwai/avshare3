@@ -7,7 +7,7 @@
     "lint": "npx eslint .",
     "sam": "sam",
     "sam:build": "sam build",
-    "sam:deploy": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset",
+    "sam:deploy": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides MyDistributionId=${CLOUDFRONT_DISTRIBUTION_ID} BucketBackend=${BUCKET_BACKEND}",
     "build": "npm run sam:build",
     "postbuild": "./build.sh",
     "deploy": "npm run sam:deploy",

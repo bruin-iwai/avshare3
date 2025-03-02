@@ -38,7 +38,10 @@ jobs:
         role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
         aws-region: ap-northeast-1
     - run: npm run build:api
-    - run: npm run deploy:api -- --parameter-overrides MyDistributionId=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} BucketBackend=${{ secrets.BUCKET_BACKEND }}
+    - run: npm run deploy:api
+      env:
+        CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        BUCKET_BACKEND: ${{ secrets.BUCKET_BACKEND }}
     - run: npm run prune -w @avshare3/api
       env:
         FUNCTION_NAME: ${{ secrets.FUNCTION_NAME }}
