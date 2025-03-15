@@ -14,9 +14,12 @@
     "deploy": "run-s generate sync"
   },
   "devDependencies": {
-    "@avshare3/api": "*"
+    "@avshare3/api": "*",
+    "@nuxt/eslint": "^1.2.0",
+    "sass": "^1.85.1"
   },
   "dependencies": {
+    "nuxt": "^3.16.0",
     "vuetify": "^3.7.2"
   }
 }
