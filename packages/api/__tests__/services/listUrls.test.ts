@@ -4,9 +4,10 @@ import { sdkStreamMixin } from '@smithy/util-stream';
 import { mockClient } from 'aws-sdk-client-mock';
 import { listUrls } from '~/services/listUrls';
 import { generateSignedUrl } from '~/repositories/generateSignedUrl';
+import { describe, expect, test, vi } from 'vitest';
 
-jest.mock('~/repositories/generateSignedUrl');
-const mockedGenerateSignedUrl = jest.mocked(generateSignedUrl);
+vi.mock('~/repositories/generateSignedUrl');
+const mockedGenerateSignedUrl = vi.mocked(generateSignedUrl);
 
 const s3Mock = mockClient(S3Client);
 

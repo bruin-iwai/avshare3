@@ -7,7 +7,7 @@
     "format": "prettier --write **/*.{js,ts,vue}",
     "lint": "npm run lint --workspaces",
     "start": "npm run start -w @avshare3/api",
-    "test": "jest",
+    "test": "vitest --coverage",
     "prepare": "husky",
     "testall": "run-s format lint test",
     "deploy:gui": "npm run deploy -w @avshare3/gui",
@@ -16,23 +16,20 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@types/jest": "^29.5.5",
     "@types/node": "^22.13.8",
-    "aws-sdk-client-mock": "^4.1.0",
+    "@vitest/coverage-v8": "^3.0.8",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.4",
-    "jest": "^29.7.0",
     "lint-staged": "^15.2.10",
     "npm-run-all2": "^6.2.2",
     "prettier": "^3.3.3",
-    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
-    "vite-plugin-vuetify": "^2.0.4",
-    "vue-tsc": "^2.0.29"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.8"
   },
   "workspaces": [
     "packages/*"

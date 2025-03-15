@@ -16,10 +16,11 @@
   "devDependencies": {
     "@avshare3/api": "*",
     "@nuxt/eslint": "^1.2.0",
-    "sass": "^1.85.1"
+    "vue-tsc": "^2.2.8"
   },
   "dependencies": {
     "nuxt": "^3.16.0",
-    "vuetify": "^3.7.2"
+    "vuetify": "^3.7.2",
+    "vuetify-nuxt-module": "^0.18.3"
   }
 }

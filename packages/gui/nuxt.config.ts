@@ -1,21 +1,5 @@
-// cf) https://codybontecou.com/how-to-use-vuetify-with-nuxt-3.html
-//     https://zenn.dev/coedo/articles/nuxt3-vuetify3
-import vuetify from 'vite-plugin-vuetify';
-
 export default defineNuxtConfig({
-  build: {
-    transpile: ['vuetify'],
-  },
-
-  css: ['vuetify/lib/styles/main.sass'],
-
-  hooks: {
-    'vite:extendConfig': (config) => {
-      config.plugins!.push(vuetify());
-    },
-  },
-
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', 'vuetify-nuxt-module'],
 
   runtimeConfig: {
     public: {
@@ -30,9 +14,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    ssr: {
-      noExternal: ['vuetify'],
-    },
     define: {
       'process.env.DEBUG': false,
     },
@@ -42,4 +23,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2025-03-15',
 });

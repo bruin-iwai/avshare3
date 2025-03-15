@@ -1,15 +1,14 @@
+import { vi, describe, test, expect, MockedClass } from 'vitest';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { generateSignedUrl } from '~/repositories/generateSignedUrl';
 
-jest.mock('@aws-sdk/s3-request-presigner', () => ({
-  getSignedUrl: jest.fn(),
-}));
-const mockedGetSignedUrl = jest.mocked(getSignedUrl);
+vi.mock('@aws-sdk/s3-request-presigner');
+const mockedGetSignedUrl = vi.mocked(getSignedUrl);
 
-jest.mock('@aws-sdk/client-s3');
-const mockedS3Client = S3Client as jest.MockedClass<typeof S3Client>;
-const mockedGetObjectCommand = GetObjectCommand as jest.MockedClass<typeof GetObjectCommand>;
+vi.mock('@aws-sdk/client-s3');
+const mockedS3Client = S3Client as MockedClass<typeof S3Client>;
+const mockedGetObjectCommand = GetObjectCommand as MockedClass<typeof GetObjectCommand>;
 
 describe('generateSignedUrl', () => {
   test('main', async () => {
