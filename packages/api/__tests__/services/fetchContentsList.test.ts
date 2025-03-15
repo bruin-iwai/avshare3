@@ -1,16 +1,17 @@
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { fetchContentsList } from '~/services/fetchContentsList';
 import { listUrls } from '~/services/listUrls';
 
-jest.mock('~/services/listUrls');
-const mockedListUrls = jest.mocked(listUrls);
+vi.mock('~/services/listUrls');
+const mockedListUrls = vi.mocked(listUrls);
 
 describe('fetchContentsList', () => {
   beforeEach(() => {
-    jest.replaceProperty(process, 'env', { BUCKET_NAME: 'aa' });
+    vi.stubEnv('BUCKET_NAME', 'aa');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   test('fetchContentsList', async () => {

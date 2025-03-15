@@ -1,9 +1,7 @@
 import type { ThemeDefinition } from 'vuetify';
 
-// テーマ名
-export const MAIN_THEME = 'mainTheme';
-// Light mode theme
-export const mainTheme: ThemeDefinition = {
+/** Light mode theme */
+export const lightTheme: ThemeDefinition = {
   dark: false,
   colors: {
     background: '#FFFFFF',
@@ -17,10 +15,8 @@ export const mainTheme: ThemeDefinition = {
   },
 };
 
-// Dark モードのテーマ名
-export const MAIN_DARK_THEME = 'mainDarkTheme';
-// Dark mode theme
-export const mainDarkTheme: ThemeDefinition = {
+/** Dark mode theme */
+export const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
     background: '#0C111B',
