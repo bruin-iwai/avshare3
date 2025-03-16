@@ -1,8 +1,5 @@
 <template>
   <div>
-    <LoadingIndicator :show="showLoading">
-      <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
-    </LoadingIndicator>
     <v-container fluid>
       <v-row no-gutters>
         <v-col align-self="center">
