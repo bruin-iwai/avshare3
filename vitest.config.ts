@@ -10,6 +10,7 @@ export default defineConfig({
         'packages/api/build.mjs',
         'packages/api/src/index.ts',
         'packages/api/src/standalone.ts',
+        'packages/gui/**',
       ],
     },
   },

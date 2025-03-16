@@ -3,7 +3,7 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifyCompress from '@fastify/compress';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
-import { apiRouter } from '~/api';
+import { rootRouter, contentsListRouter } from '~/api';
 
 export const createApp = async () => {
   const fastify = Fastify({
@@ -29,7 +29,8 @@ export const createApp = async () => {
     logo: { type: '', content: '' },
   });
 
-  fastify.register(apiRouter, { prefix: '/api' });
+  fastify.register(rootRouter, { prefix: '/api' });
+  fastify.register(contentsListRouter, { prefix: '/api' });
 
   return fastify;
 };
