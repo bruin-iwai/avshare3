@@ -33,27 +33,15 @@ const config = useRuntimeConfig();
 
 // states
 const prefix = usePrefix();
-const urls = useUrls();
 const showLoading = useShowLoading();
 
-// watch effects
-watchEffect(async () => {
-  // guard condition
-  if (!prefix.value) {
-    return;
-  }
-
-  showLoading.value = true;
-  try {
-    const { data: result } = await useFetch<UrlInfoListType>('/contentsList', {
-      baseURL: config.public.apiBase,
-      query: {
-        prefix: prefix.value,
-      },
-    });
-    urls.value = result.value!;
-  } finally {
-    showLoading.value = false;
-  }
+const { status, data: urls } = await useLazyFetch<UrlInfoListType>('/contentsList', {
+  baseURL: config.public.apiBase,
+  query: {
+    prefix,
+  },
+});
+watch(status, (newStatus) => {
+  showLoading.value = (newStatus === 'pending');
 });
 </script>
