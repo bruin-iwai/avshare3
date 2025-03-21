@@ -26,22 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import type { UrlInfoListType } from '@avshare3/api/src/types';
+import { useRootStore } from '~/stores';
+import { storeToRefs } from 'pinia';
 
-// get config
-const config = useRuntimeConfig();
-
-// states
-const prefix = usePrefix();
-const showLoading = useShowLoading();
-
-const { status, data: urls } = await useLazyFetch<UrlInfoListType>('/contentsList', {
-  baseURL: config.public.apiBase,
-  query: {
-    prefix,
-  },
-});
-watch(status, (newStatus) => {
-  showLoading.value = (newStatus === 'pending');
-});
+const rootStore = useRootStore();
+const { prefix, urls } = storeToRefs(rootStore);
 </script>
