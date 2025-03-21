@@ -156,3 +156,5 @@ node_modules
 
 .bashrc
 .aws-sam
+
+auto-imports.d.ts
