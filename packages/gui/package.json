@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.10.1",
-    "nuxt": "^3.16.0",
+    "nuxt": "^3.16.1",
     "pinia": "^3.0.1",
     "vuetify": "^3.7.2",
-    "vuetify-nuxt-module": "^0.18.3"
+    "vuetify-nuxt-module": "^0.18.4"
   }
 }
