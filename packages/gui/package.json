@@ -16,6 +16,8 @@
   "devDependencies": {
     "@avshare3/api": "*",
     "@nuxt/eslint": "^1.2.0",
+    "happy-dom": "^17.4.4",
+    "unplugin-auto-import": "^19.1.1",
     "vue-tsc": "^2.2.8"
   },
   "dependencies": {
