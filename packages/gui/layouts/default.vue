@@ -8,7 +8,7 @@
         </template>
       </v-app-bar>
       <v-main>
-        <LoadingIndicator :show="showLoading">
+        <LoadingIndicator>
           <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
         </LoadingIndicator>
         <slot />
@@ -18,15 +18,18 @@
 </template>
 
 <script setup lang="ts">
-import { useTheme } from 'vuetify';
+import { storeToRefs } from 'pinia';
+import { useThemeStore } from '~/stores/theme';
 
-const showLoading = useShowLoading();
+const themeStore = useThemeStore();
+const { isDark, themeLabel } = storeToRefs(themeStore);
 
 const theme = useTheme();
-const isDark = useDarkTheme();
-const themeLabel = computed(() => (isDark.value ? 'dark mode' : 'light mode'));
-
-watchEffect(() => {
-  theme.global.name.value = isDark.value ? 'dark' : 'light';
-});
+watch(
+  isDark,
+  (newValue) => {
+    theme.global.name.value = newValue ? 'dark' : 'light';
+  },
+  { immediate: true },
+);
 </script>

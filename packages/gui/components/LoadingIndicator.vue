@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="loading-container">
+  <div v-if="loading" class="loading-container">
     <div class="loading-backdrop" />
     <div class="loading">
       <div class="loading-icon">
@@ -10,9 +10,11 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  show?: boolean;
-}>();
+import { storeToRefs } from 'pinia';
+import { useLoadingStore } from '~/stores/loading';
+
+const loadingStore = useLoadingStore();
+const { loading } = storeToRefs(loadingStore);
 </script>
 
 <style lang="scss" scoped>
