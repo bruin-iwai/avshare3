@@ -7,7 +7,7 @@
     "format": "prettier --write **/*.{js,ts,vue}",
     "lintall": "npm run lint --if-present --workspaces",
     "start": "npm run start -w @avshare3/api",
-    "test": "npm run test --if-present --workspaces",
+    "test": "vitest --coverage --watch=false",
     "prepare": "husky",
     "testall": "run-s format lintall test",
     "deploy:gui": "npm run deploy -w @avshare3/gui",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@nuxt/test-utils": "^3.17.2",
     "@types/node": "^22.13.8",
     "@vitest/coverage-v8": "^3.0.8",
     "eslint": "^9.22.0",
