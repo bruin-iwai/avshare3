@@ -1,5 +1,5 @@
 import { ofetch } from 'ofetch';
-import type { UrlInfoListType } from '@avshare3/api/src/types';
+import type { UrlInfoListType } from '@avshare3/types';
 import { useLoadingStore } from './loading';
 
 export const useRootStore = defineStore('root', () => {

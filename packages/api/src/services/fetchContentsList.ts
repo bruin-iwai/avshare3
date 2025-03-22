@@ -1,4 +1,4 @@
-import type { UrlInfoListType } from '~/types';
+import type { UrlInfoListType } from '@avshare3/types';
 import { listUrls } from './listUrls';
 
 export const fetchContentsList = async (prefix: string): Promise<UrlInfoListType> => {

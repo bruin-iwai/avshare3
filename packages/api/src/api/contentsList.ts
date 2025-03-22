@@ -1,19 +1,44 @@
 import type { FastifyPluginAsync } from 'fastify';
-import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { ErrorInfo, QueryParam, UrlInfoList } from '~/types';
 import { fetchContentsList } from '~/services/fetchContentsList';
+import type { UrlInfoListType, IContentsListQuerystring } from '@avshare3/types';
 
 export const contentsListRouter: FastifyPluginAsync = async (fastify, _opts) => {
-  fastify.withTypeProvider<TypeBoxTypeProvider>().get(
+  fastify.get<{
+    Querystring: IContentsListQuerystring;
+    Reply: UrlInfoListType;
+  }>(
     '/contentsList',
     {
       schema: {
         summary: 'Get contents list',
         tags: ['general'],
-        querystring: QueryParam,
+        querystring: {
+          type: 'object',
+          properties: {
+            prefix: { type: 'string' },
+          },
+        },
         response: {
-          '200': UrlInfoList,
-          default: ErrorInfo,
+          '200': {
+            description: 'Successful response',
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' },
+                title: { type: 'string' },
+              },
+            },
+          },
+          default: {
+            description: 'Unsuccessful response',
+            type: 'object',
+            properties: {
+              statusCode: { type: 'number' },
+              error: { type: 'string' },
+              message: { type: 'string' },
+            },
+          },
         },
       },
     },
