@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@avshare3/api": "*",
+    "@avshare3/types": "*",
     "@nuxt/eslint": "^1.2.0",
     "happy-dom": "^17.4.4",
     "unplugin-auto-import": "^19.1.1",

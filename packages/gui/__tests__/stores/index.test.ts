@@ -2,7 +2,7 @@ import { vi, describe, test, expect, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useRootStore } from '~/stores';
 import { ofetch } from 'ofetch';
-import type { UrlInfoListType } from '@avshare3/api/src/types';
+import type { UrlInfoListType } from '@avshare3/types';
 
 vi.mock('ofetch');
 const mockOfetch = vi.mocked(ofetch);
