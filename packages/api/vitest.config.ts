@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig, coverageConfigDefaults } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -9,5 +9,15 @@ export default defineConfig({
     clearMocks: true,
     passWithNoTests: true,
     setupFiles: ['__tests__/setup.ts'],
+    coverage: {
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        '.aws-sam/**',
+        'dist/**',
+        'build.mjs',
+        'src/index.ts',
+        'src/standalone.ts',
+      ],
+    },
   },
 });
