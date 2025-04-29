@@ -1,5 +1,16 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', 'vuetify-nuxt-module', '@pinia/nuxt', '@nuxt/test-utils/module'],
+  modules: [
+    '@nuxt/eslint',
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        config.plugins!.push(vuetify({ autoImport: true }));
+      });
+    },
+  ],
 
   runtimeConfig: {
     public: {
@@ -13,6 +24,10 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
+  build: {
+    transpile: ['vuetify'],
+  },
+
   vite: {
     define: {
       'process.env.DEBUG': false,
@@ -22,45 +37,9 @@ export default defineNuxtConfig({
         port: 24678,
       },
     },
-  },
-
-  vuetify: {
-    vuetifyOptions: {
-      theme: {
-        defaultTheme: 'dark',
-        themes: {
-          light: {
-            dark: false,
-            colors: {
-              background: '#FFFFFF',
-              surface: '#FFFFFF',
-              primary: '#4f46e5',
-              secondary: '#9333ea',
-              error: '#ef4444',
-              info: '#3b82f6',
-              success: '#22c55e',
-              warning: '#f59e0b',
-            },
-          },
-          dark: {
-            dark: true,
-            colors: {
-              background: '#0C111B',
-              surface: '#1f2937',
-              primary: '#6366f1',
-              secondary: '#9333ea',
-              error: '#ef4444',
-              info: '#3b82f6',
-              success: '#22c55e',
-              warning: '#f59e0b',
-            },
-          },
-        },
-        variations: {
-          colors: ['primary', 'secondary', 'accent'],
-          lighten: 9,
-          darken: 9,
-        },
+    vue: {
+      template: {
+        transformAssetUrls,
       },
     },
   },
