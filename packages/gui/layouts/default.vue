@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useThemeStore } from '~/stores/theme';
+import { useTheme } from 'vuetify';
 
 const themeStore = useThemeStore();
 const { isDark, themeLabel } = storeToRefs(themeStore);
