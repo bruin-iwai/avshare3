@@ -1,0 +1,10 @@
+on:
+  push:
+    branches:
+      - feature/gha-trial
+jobs:
+  check-awk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check awk version
+        run: awk --version
