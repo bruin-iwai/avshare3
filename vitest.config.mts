@@ -1,6 +1,6 @@
 import { defineConfig, coverageConfigDefaults } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineVitestConfig } from '@nuxt/test-utils/config';
+import { defineVitestProject } from '@nuxt/test-utils/config';
 
 export default defineConfig({
   test: {
@@ -15,7 +15,7 @@ export default defineConfig({
           setupFiles: ['__tests__/setup.ts'],
         },
       },
-      defineVitestConfig({
+      await defineVitestProject({
         plugins: [tsconfigPaths()],
         test: {
           root: 'packages/gui',
