@@ -1,11 +1,11 @@
-import { defineConfig, defineProject, coverageConfigDefaults } from 'vitest/config';
+import { defineConfig, coverageConfigDefaults } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineVitestConfig } from '@nuxt/test-utils/config';
 
 export default defineConfig({
   test: {
-    workspace: [
-      defineProject({
+    projects: [
+      {
         plugins: [tsconfigPaths()],
         test: {
           root: 'packages/api',
@@ -14,7 +14,7 @@ export default defineConfig({
           clearMocks: true,
           setupFiles: ['__tests__/setup.ts'],
         },
-      }),
+      },
       defineVitestConfig({
         plugins: [tsconfigPaths()],
         test: {
