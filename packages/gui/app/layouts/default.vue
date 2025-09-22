@@ -8,29 +8,27 @@
         </template>
       </v-app-bar>
       <v-main>
-        <LoadingIndicator>
-          <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
-        </LoadingIndicator>
-        <slot />
+        <Suspense>
+          <slot />
+          <template #fallback>
+            <LoadingIndicator>
+              <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
+            </LoadingIndicator>
+          </template>
+        </Suspense>
       </v-main>
     </v-app>
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from '~/stores/theme';
 import { useTheme } from 'vuetify';
 
-const themeStore = useThemeStore();
-const { isDark, themeLabel } = storeToRefs(themeStore);
-
+const isDark = ref(true);
+const themeLabel = computed(() => (isDark.value ? 'dark mode' : 'light mode'));
 const theme = useTheme();
-watch(
-  isDark,
-  (newValue) => {
-    theme.global.name.value = newValue ? 'dark' : 'light';
-  },
-  { immediate: true },
-);
+
+watchEffect(() => {
+  theme.global.name.value = isDark.value ? 'dark' : 'light';
+});
 </script>

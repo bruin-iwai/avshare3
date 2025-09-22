@@ -26,9 +26,19 @@
 </template>
 
 <script setup lang="ts">
-import { useRootStore } from '~/stores';
-import { storeToRefs } from 'pinia';
+import type { UrlInfoListType } from '@avshare3/types';
 
-const rootStore = useRootStore();
-const { prefix, urls } = storeToRefs(rootStore);
+const prefix = ref('');
+const urls = ref<UrlInfoListType>([]);
+const {
+  public: { apiBase: baseURL },
+} = useRuntimeConfig();
+
+watchEffect(async () => {
+  const res = await $fetch<UrlInfoListType>('/contentsList', {
+    baseURL,
+    query: { prefix: prefix.value },
+  });
+  urls.value = res;
+});
 </script>
