@@ -35,6 +35,10 @@ const {
 } = useRuntimeConfig();
 
 watchEffect(async () => {
+  if (!prefix.value) {
+    return;
+  }
+
   const res = await $fetch<UrlInfoListType>('/contentsList', {
     baseURL,
     query: { prefix: prefix.value },
