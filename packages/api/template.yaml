@@ -11,7 +11,6 @@ Globals:
     MemorySize: 512
     Runtime: nodejs22.x
     Timeout: 30
-    Tracing: Active
 
 Parameters:
   MyDistributionId:
@@ -39,12 +38,17 @@ Resources:
       Environment:
         Variables:
           BUCKET_NAME: !Ref BucketBackend
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-handler
+          OTEL_NODE_ENABLED_INSTRUMENTATIONS: aws-sdk,aws-lambda,http
       AutoPublishAlias: current
       DeploymentPreference:
         Type: AllAtOnce
         Alarms:
           - !Ref AliasErrorMetricGreaterThanZeroAlarm
           - !Ref LatestVersionErrorMetricGreaterThanZeroAlarm
+      Layers:
+        - arn:aws:lambda:ap-northeast-1:901920570463:layer:aws-otel-nodejs-amd64-ver-1-30-2:1
+      Tracing: Active
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:

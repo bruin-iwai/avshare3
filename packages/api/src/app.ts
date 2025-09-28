@@ -3,6 +3,7 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifyCompress from '@fastify/compress';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
+import fastifyCors from '@fastify/cors';
 import { rootRouter, contentsListRouter } from '~/api';
 
 export const createApp = async () => {
@@ -12,6 +13,9 @@ export const createApp = async () => {
 
   fastify.register(fastifyHelmet);
   await fastify.register(fastifyCompress);
+  await fastify.register(fastifyCors, {
+    origin: process.env.CORS_ENABLED === 'true',
+  });
 
   await fastify.register(fastifySwagger, {
     openapi: {

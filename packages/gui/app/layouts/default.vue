@@ -24,11 +24,15 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify';
 
-const isDark = ref(true);
-const themeLabel = computed(() => (isDark.value ? 'dark mode' : 'light mode'));
 const theme = useTheme();
 
-watchEffect(() => {
-  theme.global.name.value = isDark.value ? 'dark' : 'light';
+const isDark = computed({
+  get() {
+    return theme.global.name.value === 'dark';
+  },
+  set(newValue) {
+    theme.global.name.value = newValue ? 'dark' : 'light';
+  },
 });
+const themeLabel = computed(() => (isDark.value ? 'dark mode' : 'light mode'));
 </script>
