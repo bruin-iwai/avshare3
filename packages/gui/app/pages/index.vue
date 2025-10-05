@@ -33,19 +33,16 @@ const urls = ref<UrlInfoListType>([]);
 const {
   public: { apiBase: baseURL },
 } = useRuntimeConfig();
-console.log(`baseURL: ${baseURL}`);
 
 watchEffect(async () => {
   if (!prefix.value) {
     return;
   }
 
-  console.log(`prefix: ${prefix.value}`);
   const res = await $fetch<UrlInfoListType>('/contentsList', {
     baseURL,
     query: { prefix: prefix.value },
   });
-  console.log(`res: ${res}`);
   urls.value = res;
 });
 </script>
