@@ -20,7 +20,7 @@ jobs:
     - run: npm run testall
 
   deploy_api:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref_name == 'feature/add-debug-logs' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [test]
     timeout-minutes: 20
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
         FUNCTION_NAME: ${{ secrets.FUNCTION_NAME }}
 
   deploy_gui:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref_name == 'feature/add-debug-logs' }}
     needs: [test]
     timeout-minutes: 20
     runs-on: ubuntu-latest
