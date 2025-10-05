@@ -18,7 +18,7 @@
     "@avshare3/types": "*",
     "@nuxt/eslint": "^1.9.0",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^17.4.4",
+    "happy-dom": "^19.0.2",
     "vite-plugin-vuetify": "^2.1.2",
     "vue-tsc": "^2.2.8",
     "vuetify": "^3.8.2"
