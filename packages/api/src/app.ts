@@ -12,7 +12,7 @@ export const createApp = async () => {
   });
 
   fastify.register(fastifyHelmet);
-  await fastify.register(fastifyCompress);
+  await fastify.register(fastifyCompress, { encodings: ['gzip', 'deflate'] });
   await fastify.register(fastifyCors, {
     origin: process.env.CORS_ENABLED === 'true',
   });
