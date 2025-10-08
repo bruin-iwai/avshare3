@@ -19,7 +19,6 @@
     "@nuxt/eslint": "^1.9.0",
     "@vue/test-utils": "^2.4.6",
     "vite-plugin-vuetify": "^2.1.2",
-    "vue-tsc": "^3.1.1",
     "vuetify": "^3.10.4"
   },
   "dependencies": {
