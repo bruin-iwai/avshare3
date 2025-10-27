@@ -4,6 +4,11 @@ defaults:
   run:
     shell: bash
 
+# 同時に動くワークフローは1個だけ；先行ワークフローは自動キャンセル
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-app
+  cancel-in-progress: true
+
 jobs:
   test:
     timeout-minutes: 20
