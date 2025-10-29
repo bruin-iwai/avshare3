@@ -89,7 +89,7 @@ Resources:
     Properties:
       Action: lambda:InvokeFunction
       FunctionName: !Sub "${MyFunction}:current"
-      FunctionUrlAuthType: AWS_IAM
+      InvokedViaFunctionUrl: true
       Principal: cloudfront.amazonaws.com
       SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${MyDistributionId}"
 
