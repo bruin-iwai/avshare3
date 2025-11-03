@@ -3,7 +3,6 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/test-utils/module',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         config.plugins!.push(vuetify({ autoImport: true }));
@@ -23,6 +22,8 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
+  // This config needs vue-tsc
+  // https://nuxt.com/docs/4.x/guide/concepts/typescript
   build: {
     transpile: ['vuetify'],
   },
