@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
+  // This config needs vue-tsc
+  // https://nuxt.com/docs/4.x/guide/concepts/typescript
   build: {
     transpile: ['vuetify'],
   },
