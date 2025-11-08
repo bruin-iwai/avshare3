@@ -19,3 +19,7 @@ updates:
       aws-sdk-group:
         patterns:
           - "@aws-sdk/*"
+      vitest-group:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
