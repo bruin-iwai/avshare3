@@ -15,3 +15,7 @@ updates:
     schedule:
       interval: "weekly"
       day: saturday
+    groups:
+      aws-sdk-group:
+        patterns:
+          - "@aws-sdk/*"
