@@ -6,6 +6,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: saturday
 
   - package-ecosystem: "npm"
     directories:
@@ -13,3 +14,4 @@ updates:
       - "/packages/*"
     schedule:
       interval: "weekly"
+      day: saturday
