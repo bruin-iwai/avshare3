@@ -15,7 +15,7 @@
     "deploy:api": "npm run deploy -w @avshare3/api"
   },
   "devDependencies": {
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
     "@vitest/coverage-v8": "^4.0.13",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
