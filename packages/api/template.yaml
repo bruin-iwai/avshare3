@@ -9,7 +9,7 @@ Globals:
     Architectures:
       - x86_64
     MemorySize: 512
-    Runtime: nodejs22.x
+    Runtime: nodejs24.x
     Timeout: 30
 
 Parameters:
