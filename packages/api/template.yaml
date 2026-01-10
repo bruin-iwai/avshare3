@@ -33,13 +33,14 @@ Resources:
       CodeUri: src/
       Handler: index.handler
       Policies:
+        - AWSXRayDaemonWriteAccess
         - S3ReadPolicy:
             BucketName: !Ref BucketBackend
       Environment:
         Variables:
           BUCKET_NAME: !Ref BucketBackend
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-handler
-          OTEL_NODE_ENABLED_INSTRUMENTATIONS: aws-sdk,aws-lambda,http
+          # AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-handler
+          # OTEL_NODE_ENABLED_INSTRUMENTATIONS: aws-sdk,aws-lambda,http
       AutoPublishAlias: current
       DeploymentPreference:
         Type: AllAtOnce
