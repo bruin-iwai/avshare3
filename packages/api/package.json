@@ -12,7 +12,7 @@
     "postbuild": "./build.sh",
     "deploy": "npm run sam:deploy",
     "buildlocal": "node build.mjs",
-    "startlocal": "node dist/index.js",
+    "startlocal": "node -r dotenv/config dist/index.js",
     "prune": "./pruneLambdaVersions.sh"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "@avshare3/types": "*",
     "@eslint/js": "^9.39.2",
     "aws-sdk-client-mock-vitest": "^7.0.1",
+    "dotenv": "^17.2.3",
     "eslint-config-prettier": "^10.1.8",
     "typescript-eslint": "^8.52.0"
   }
