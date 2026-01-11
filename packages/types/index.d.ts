@@ -14,8 +14,6 @@ declare namespace typeDefs {
     title: string;
   }
 
-  export type UrlInfoListType = UrlInfoType[];
-
   export interface IContentsListQuerystring {
     prefix: string;
   }

@@ -16,16 +16,22 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-      with:
-        node-version-file: .nvmrc
-    - run: npm ci
-    - run: npm run build --if-present --workspaces
-    - run: npm run testall
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - name: Build api
+        run: npm run buildlocal -w @avshare3/api
+      - name: Build gui
+        run: npm run generate -w @avshare3/gui
+      - run: npm run testall
+      - uses: docker/setup-buildx-action@v3
+      - name: Docker build test
+        run: docker build --build-arg BUILDKIT_SYNTAX=docker/dockerfile:1.20 -t my:test .
 
-  deploy_api:
-    if: ${{ github.ref == 'refs/heads/main' }}
+  deploy:
+    if: ${{ github.ref_name == 'main' }}
     needs: [test]
     timeout-minutes: 20
     runs-on: ubuntu-latest
@@ -33,42 +39,24 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-      with:
-        node-version-file: .nvmrc
-    - run: npm ci
-    - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
-      with:
-        role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
-        aws-region: ap-northeast-1
-    - run: npm run build:api
-    - run: npm run deploy:api
-      env:
-        CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-        BUCKET_BACKEND: ${{ secrets.BUCKET_BACKEND }}
-    - run: npm run prune -w @avshare3/api
-      env:
-        FUNCTION_NAME: ${{ secrets.FUNCTION_NAME }}
+      - uses: actions/checkout@v6
 
-  deploy_gui:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [test]
-    timeout-minutes: 20
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-      with:
-        node-version-file: .nvmrc
-    - run: npm ci
-    - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
-      with:
-        role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
-        aws-region: ap-northeast-1
-    - run: npm run deploy:gui
-      env:
-        BUCKET_FRONTEND: ${{ secrets.BUCKET_FRONTEND }}
+      # Signin to AWS
+      - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
+        with:
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+          aws-region: ap-northeast-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Docker build & push
+      - uses: docker/setup-buildx-action@v3
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: bruin-iwai/avshare3
+          IMAGE_TAG: latest
+        run: |
+          docker build --build-arg BUILDKIT_SYNTAX=docker/dockerfile:1.20 -t "$REGISTRY/$REPOSITORY:$IMAGE_TAG" .
+          docker push "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
