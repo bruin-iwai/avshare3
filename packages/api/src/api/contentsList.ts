@@ -1,11 +1,11 @@
 import type { FastifyPluginAsync } from 'fastify';
 import { fetchContentsList } from '~/services/fetchContentsList';
-import type { UrlInfoListType, IContentsListQuerystring } from '@avshare3/types';
+import type { IContentsListQuerystring, UrlInfoType } from '@avshare3/types';
 
 export const contentsListRouter: FastifyPluginAsync = async (fastify, _opts) => {
   fastify.get<{
     Querystring: IContentsListQuerystring;
-    Reply: UrlInfoListType;
+    Reply: UrlInfoType[];
   }>(
     '/contentsList',
     {
@@ -44,6 +44,9 @@ export const contentsListRouter: FastifyPluginAsync = async (fastify, _opts) => 
     },
     async (req, _reply) => {
       const { prefix } = req.query;
+      if (!prefix) {
+        return [];
+      }
       const urlInfoList = await fetchContentsList(prefix);
       return urlInfoList;
     },

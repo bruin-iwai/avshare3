@@ -1,7 +1,7 @@
-import type { UrlInfoListType } from '@avshare3/types';
+import type { UrlInfoType } from '@avshare3/types';
 import { listUrls } from './listUrls';
 
-export const fetchContentsList = async (prefix: string): Promise<UrlInfoListType> => {
+export const fetchContentsList = async (prefix: string): Promise<UrlInfoType[]> => {
   const bucket = process.env.BUCKET_NAME!;
   const urls = await listUrls(bucket, prefix);
   return urls;

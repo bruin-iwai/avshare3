@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import type { UrlInfoListType } from '@avshare3/types';
+import type { UrlInfoType } from '@avshare3/types';
 
 const prefix = ref('');
-const urls = ref<UrlInfoListType>([]);
+const urls = ref<UrlInfoType[]>([]);
 const {
   public: { apiBase: baseURL },
 } = useRuntimeConfig();
@@ -39,7 +39,7 @@ watchEffect(async () => {
     return;
   }
 
-  const res = await $fetch<UrlInfoListType>('/contentsList', {
+  const res = await $fetch<UrlInfoType[]>('/contentsList', {
     baseURL,
     query: { prefix: prefix.value },
   });

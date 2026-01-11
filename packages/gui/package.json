@@ -9,9 +9,7 @@
     "build": "nuxi build",
     "start": "nuxi preview",
     "generate": "nuxi generate",
-    "nuxi": "nuxi",
-    "sync": "aws s3 sync .output/public/ s3://${BUCKET_FRONTEND}/",
-    "deploy": "run-s generate sync"
+    "nuxi": "nuxi"
   },
   "devDependencies": {
     "@avshare3/api": "*",
