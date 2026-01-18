@@ -6,7 +6,7 @@
     "prettier": "prettier --check **/*.{js,ts,vue}",
     "format": "prettier --write **/*.{js,ts,vue}",
     "lintall": "npm run lint --if-present --workspaces",
-    "start": "npm run start -w @avshare3/api",
+    "start": "echo Hello",
     "test": "vitest run --coverage",
     "prepare": "husky",
     "testall": "run-s format lintall test"
