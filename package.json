@@ -5,7 +5,7 @@
   "scripts": {
     "prettier": "prettier --check **/*.{js,ts,vue}",
     "format": "prettier --write **/*.{js,ts,vue}",
-    "lintall": "npm run lint --if-present --workspaces",
+    "lintall": "npx eslint --flag v10_config_lookup_from_file .",
     "start": "echo Hello",
     "test": "vitest run --coverage",
     "prepare": "husky",
