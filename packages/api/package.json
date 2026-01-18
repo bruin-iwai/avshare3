@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "echo Hello",
-    "lint": "npx eslint .",
     "buildlocal": "node build.mjs",
     "startlocal": "node dist/index.js"
   },
