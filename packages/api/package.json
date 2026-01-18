@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/standalone.ts",
+    "start": "echo Hello",
     "lint": "npx eslint .",
     "buildlocal": "node build.mjs",
     "startlocal": "node dist/index.js"
