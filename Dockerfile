@@ -10,6 +10,6 @@ WORKDIR /usr/src/app
 COPY --parents ./package*.json ./packages/api/package.json ./packages/gui/package.json ./packages/types/package.json ./
 RUN npm ci
 COPY . ./
-RUN npm run buildlocal -w @avshare3/api \
+RUN npm run build -w @avshare3/api \
   && npm run generate -w @avshare3/gui
-CMD [ "npm", "run", "startlocal", "-w", "@avshare3/api" ]
+CMD [ "npm", "run", "start", "-w", "@avshare3/api" ]
