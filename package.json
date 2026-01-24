@@ -5,11 +5,10 @@
   "scripts": {
     "prettier": "prettier --check **/*.{js,ts,vue}",
     "format": "prettier --write **/*.{js,ts,vue}",
-    "lintall": "npx eslint .",
+    "lint": "npx eslint .",
     "start": "echo Hello",
     "test": "vitest run --coverage",
-    "prepare": "husky",
-    "testall": "run-s format lintall test"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -21,7 +20,6 @@
     "globals": "^17.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1",
