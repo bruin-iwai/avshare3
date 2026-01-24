@@ -5,21 +5,26 @@
   "scripts": {
     "prettier": "prettier --check **/*.{js,ts,vue}",
     "format": "prettier --write **/*.{js,ts,vue}",
-    "lintall": "npx eslint --flag v10_config_lookup_from_file .",
+    "lintall": "npx eslint .",
     "start": "echo Hello",
     "test": "vitest run --coverage",
     "prepare": "husky",
     "testall": "run-s format lintall test"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@nuxt/eslint": "^1.13.0",
     "@types/node": "^25.0.3",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
     "vite-tsconfig-paths": "^6.0.4",
     "vitest": "^4.0.18"
   },

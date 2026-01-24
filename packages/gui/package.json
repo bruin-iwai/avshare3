@@ -13,7 +13,6 @@
   "devDependencies": {
     "@avshare3/api": "*",
     "@avshare3/types": "*",
-    "@nuxt/eslint": "^1.12.1",
     "sass-embedded": "^1.97.2",
     "vite-plugin-vuetify": "^2.1.3",
     "vue-tsc": "^3.2.3",
