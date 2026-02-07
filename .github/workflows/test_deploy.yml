@@ -20,6 +20,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+          cache: npm
       - run: npm ci
       - name: Build api
         run: npm run build -w @avshare3/api
