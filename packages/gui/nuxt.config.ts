@@ -1,14 +1,5 @@
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
-
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/eslint',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        config.plugins!.push(vuetify({ autoImport: true }));
-      });
-    },
-  ],
+  modules: ['@nuxt/eslint', 'vuetify-nuxt-module'],
 
   runtimeConfig: {
     public: {
@@ -22,12 +13,6 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  // This config needs vue-tsc
-  // https://nuxt.com/docs/4.x/guide/concepts/typescript
-  build: {
-    transpile: ['vuetify'],
-  },
-
   vite: {
     define: {
       'process.env.DEBUG': false,
@@ -35,11 +20,6 @@ export default defineNuxtConfig({
     server: {
       hmr: {
         port: 24678,
-      },
-    },
-    vue: {
-      template: {
-        transformAssetUrls,
       },
     },
   },
