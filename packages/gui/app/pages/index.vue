@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col align-self="center">
-          <v-select v-model="prefix" :items="['', 'my-favorites', 'old-programs']" label="prefix" />
+          <v-select v-model="prefix" :items="selectOptions" label="prefix" />
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -26,23 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import type { UrlInfoType } from '@avshare3/types';
+import { useContentsStore } from '~/stores/contents';
 
-const prefix = ref('');
-const urls = ref<UrlInfoType[]>([]);
-const {
-  public: { apiBase: baseURL },
-} = useRuntimeConfig();
-
-watchEffect(async () => {
-  if (!prefix.value) {
-    return;
-  }
-
-  const res = await $fetch<UrlInfoType[]>('/contentsList', {
-    baseURL,
-    query: { prefix: prefix.value },
-  });
-  urls.value = res;
-});
+const contentsStore = useContentsStore();
+const { prefix, urls, selectOptions } = storeToRefs(contentsStore);
 </script>
