@@ -11,5 +11,6 @@ COPY --parents ./package*.json ./packages/api/package.json ./packages/gui/packag
 RUN npm ci
 COPY . ./
 RUN npm run build -w @avshare3/api \
+  && npm run nuxt:prepare -w @avshare3/gui \
   && npm run generate -w @avshare3/gui
 CMD [ "npm", "run", "start", "-w", "@avshare3/api" ]

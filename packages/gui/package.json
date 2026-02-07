@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt preview",
     "generate": "nuxt generate",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "nuxt:prepare": "nuxt prepare"
   },
   "devDependencies": {
     "@avshare3/types": "*",
@@ -17,7 +18,9 @@
   "dependencies": {
     "@avshare3/api": "*",
     "@mdi/font": "^7.4.47",
+    "@pinia/nuxt": "^0.11.3",
     "nuxt": "^4.3.0",
+    "pinia": "^3.0.4",
     "vue": "^3.5.27"
   }
 }
