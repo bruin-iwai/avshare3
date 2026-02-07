@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt preview",
     "generate": "nuxt generate",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "nuxt:prepare": "nuxt prepare"
   },
   "devDependencies": {
     "@avshare3/types": "*",
