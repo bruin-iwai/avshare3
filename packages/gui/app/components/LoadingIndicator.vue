@@ -1,13 +1,19 @@
 <template>
-  <div class="loading-container">
+  <div v-if="loading" class="loading-container">
     <div class="loading-backdrop" />
     <div class="loading">
       <div class="loading-icon">
+        <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
         <slot />
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const loadingStore = useLoadingStore();
+const { loading } = storeToRefs(loadingStore);
+</script>
 
 <style lang="scss" scoped>
 .loading-container {

@@ -26,8 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { useContentsStore } from '~/stores/contents';
-
 const contentsStore = useContentsStore();
 const { prefix, urls, selectOptions } = storeToRefs(contentsStore);
 </script>
