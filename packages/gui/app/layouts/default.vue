@@ -8,14 +8,8 @@
         </template>
       </v-app-bar>
       <v-main>
-        <Suspense>
-          <slot />
-          <template #fallback>
-            <LoadingIndicator>
-              <v-progress-circular :size="70" :width="7" color="darkgray" indeterminate />
-            </LoadingIndicator>
-          </template>
-        </Suspense>
+        <slot />
+        <LoadingIndicator />
       </v-main>
     </v-app>
   </div>
