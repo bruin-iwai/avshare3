@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import type { UrlInfoType } from '@avshare3/types';
 
 export const useContentsStore = defineStore('contents', () => {
