@@ -23,3 +23,11 @@ updates:
         patterns:
           - "vitest"
           - "@vitest/*"
+      eslint-group:
+        patterns:
+          - eslint
+          - eslint-config-prettier
+          - globals
+          - typescript-eslint
+          - "@eslint/*"
+          - "@nuxt/eslint"
