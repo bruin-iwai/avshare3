@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { type Config, defineConfig } from 'eslint/config';
+import { type Config, defineConfig, globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import withNuxt from './packages/gui/.nuxt/eslint.config.mjs';
 
@@ -11,9 +11,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default (async (): Promise<Config[]> => {
   const apiConfigs = defineConfig([
-    {
-      ignores: ['.aws-sam/**', 'dist/**', 'build.mjs'],
-    },
     {
       files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
       plugins: { js },
@@ -35,7 +32,6 @@ export default (async (): Promise<Config[]> => {
       },
     },
     tseslint.configs.recommended,
-    eslintConfigPrettier,
     {
       rules: {
         '@typescript-eslint/no-unused-vars': [
@@ -62,9 +58,7 @@ export default (async (): Promise<Config[]> => {
   });
 
   return defineConfig([
-    {
-      ignores: ['coverage/**', '**/*.d.ts'],
-    },
+    globalIgnores(['coverage/', '**/*.d.ts', '**/.aws-sam/', '**/dist/', '**/build.mjs']),
     {
       name: 'configForApi',
       basePath: 'packages/api',
@@ -75,5 +69,6 @@ export default (async (): Promise<Config[]> => {
       basePath: 'packages/gui',
       extends: guiConfigs,
     },
+    eslintConfigPrettier,
   ]);
 })();
