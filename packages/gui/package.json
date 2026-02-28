@@ -13,7 +13,7 @@
   "devDependencies": {
     "@avshare3/types": "*",
     "sass-embedded": "^1.97.3",
-    "vue-tsc": "^3.2.4",
+    "vue-tsc": "^3.2.5",
     "vuetify-nuxt-module": "^0.19.5"
   },
   "dependencies": {
