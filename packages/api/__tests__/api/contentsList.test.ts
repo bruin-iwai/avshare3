@@ -9,9 +9,9 @@ const mockFetchContentsList = vi.mocked(fetchContentsList);
 describe('contentsList', () => {
   test('contentsList', async () => {
     const urlInfoList = [
-      { url: 'a', title: 'あ' },
-      { url: 'b', title: 'い' },
-      { url: 'c', title: 'う' },
+      { href: 'a', title: 'あ' },
+      { href: 'b', title: 'い' },
+      { href: 'c', title: 'う' },
     ];
     mockFetchContentsList.mockResolvedValueOnce(urlInfoList);
 

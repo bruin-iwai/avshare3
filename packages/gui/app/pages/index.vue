@@ -1,31 +1,41 @@
 <template>
-  <div>
-    <v-container fluid>
-      <v-row no-gutters>
-        <v-col align-self="center">
-          <v-select v-model="prefix" :items="selectOptions" label="prefix" />
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col align-self="center">
-          <v-card v-if="prefix">
-            <v-card-text>
-              <v-list>
-                <v-list-item v-for="(item, i) in urls" :key="i">
-                  <v-list-item-title>
-                    <a :href="item.url" target="_blank">{{ item.title }}</a>
-                  </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+  <div class="container">
+    <div class="side"></div>
+    <div class="content d-flex flex-column">
+      <v-select
+        v-model="prefix"
+        density="default"
+        :items="selectOptions"
+        hide-details
+        label="prefix"
+        persistent-placeholder
+      />
+      <v-sheet v-if="prefix">
+        <v-list>
+          <v-list-item
+            v-for="(item, i) in urls"
+            :key="i"
+            :title="item.title"
+            :href="item.href"
+            target="_blank"
+          />
+        </v-list>
+      </v-sheet>
+    </div>
+    <div class="side"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-const contentsStore = useContentsStore();
-const { prefix, urls, selectOptions } = storeToRefs(contentsStore);
+const { prefix, urls, selectOptions } = storeToRefs(useContentsStore());
 </script>
+
+<style scoped>
+.container {
+  display: grid;
+  grid-template-columns: minmax(4px, 1fr) minmax(660px, 1200px) minmax(4px, 1fr);
+  justify-content: center;
+  width: 100%;
+  overflow: auto;
+}
+</style>

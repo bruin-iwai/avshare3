@@ -10,7 +10,7 @@ declare namespace typeDefs {
   }
 
   export interface UrlInfoType {
-    url: string;
+    href: string;
     title: string;
   }
 
