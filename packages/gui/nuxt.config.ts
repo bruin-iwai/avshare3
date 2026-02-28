@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', 'vuetify-nuxt-module', '@pinia/nuxt'],
+  modules: ['@nuxt/eslint', 'vuetify-nuxt-module', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
   runtimeConfig: {
     public: {
