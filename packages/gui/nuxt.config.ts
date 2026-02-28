@@ -13,13 +13,17 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
+  devServer: {
+    host: 'localhost',
+    port: 4000,
+  },
+
   vite: {
-    define: {
-      'process.env.DEBUG': false,
-    },
     server: {
       hmr: {
-        port: 24678,
+        // Nuxt DevTools の制約により devServer.port と同じ値にする
+        // port: 24678,
+        port: 4000,
       },
     },
   },
