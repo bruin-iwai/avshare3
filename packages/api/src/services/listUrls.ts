@@ -12,7 +12,7 @@ export const listUrls = async (bucket: string, prefix: string) => {
     const item = index.files[i];
     const url = await generateSignedUrl(bucket, `${prefix}/${item.file}`);
     urls.push({
-      url,
+      href: url,
       title: item.title,
     });
   }

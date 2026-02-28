@@ -25,7 +25,7 @@ export const contentsListRouter: FastifyPluginAsync = async (fastify, _opts) => 
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' },
+                href: { type: 'string' },
                 title: { type: 'string' },
               },
             },

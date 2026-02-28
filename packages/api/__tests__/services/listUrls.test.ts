@@ -51,11 +51,11 @@ describe('listUrls', () => {
 
     expect(urls).toEqual([
       {
-        url: 'https://dummy1',
+        href: 'https://dummy1',
         title: 'ああ',
       },
       {
-        url: 'https://dummy2',
+        href: 'https://dummy2',
         title: 'いい',
       },
     ]);
