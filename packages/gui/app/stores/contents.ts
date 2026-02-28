@@ -3,7 +3,6 @@ import type { UrlInfoType } from '@avshare3/types';
 export const useContentsStore = defineStore('contents', () => {
   const prefix = ref('');
   const urls = ref<UrlInfoType[]>([]);
-  const selectOptions = ref<string[]>(['', 'my-favorites', 'old-programs']);
 
   const api = useApi();
 
@@ -19,5 +18,10 @@ export const useContentsStore = defineStore('contents', () => {
     urls.value = res;
   });
 
-  return { prefix, urls, selectOptions };
+  const $reset = () => {
+    prefix.value = '';
+    urls.value = [];
+  };
+
+  return { prefix, urls, $reset };
 });

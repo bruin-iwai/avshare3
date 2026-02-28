@@ -1,4 +1,9 @@
 export const useLoadingStore = defineStore('loading', () => {
   const loading = ref(false);
-  return { loading };
+
+  const $reset = () => {
+    loading.value = false;
+  };
+
+  return { loading, $reset };
 });

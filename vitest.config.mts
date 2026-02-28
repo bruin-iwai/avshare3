@@ -2,7 +2,7 @@ import { defineConfig, coverageConfigDefaults } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    projects: ['packages/api'],
+    projects: ['packages/api', 'packages/gui'],
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,

@@ -5,7 +5,7 @@
       <v-select
         v-model="prefix"
         density="default"
-        :items="selectOptions"
+        :items="['', 'my-favorites', 'old-programs']"
         hide-details
         label="prefix"
         persistent-placeholder
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-const { prefix, urls, selectOptions } = storeToRefs(useContentsStore());
+const { prefix, urls } = storeToRefs(useContentsStore());
 </script>
 
 <style scoped>
