@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:24.12-slim
+FROM public.ecr.aws/docker/library/node:24.14-trixie-slim
 RUN apt-get -y update \
   && apt-get -y upgrade \
   # && apt-get --no-install-recommends -y install \
