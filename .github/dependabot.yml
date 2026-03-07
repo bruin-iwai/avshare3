@@ -1,6 +1,12 @@
 # cf) https://docs.github.com/ja/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 
 version: 2
+
+registries:
+  ecr-public:
+    type: docker-registry
+    url: public.ecr.aws
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -39,3 +45,5 @@ updates:
     schedule:
       interval: "weekly"
       day: friday
+    registries:
+      - "*"
