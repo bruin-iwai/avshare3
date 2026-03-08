@@ -17,11 +17,11 @@ describe('fetchContentsList', () => {
   test('fetchContentsList', async () => {
     mockedListUrls.mockResolvedValueOnce([
       {
-        url: 'https://dummy1',
+        key: 'aa.mp4',
         title: 'ああ',
       },
       {
-        url: 'https://dummy2',
+        key: 'bb.mp4',
         title: 'いい',
       },
     ]);
@@ -30,11 +30,11 @@ describe('fetchContentsList', () => {
 
     expect(ret).toEqual([
       {
-        url: 'https://dummy1',
+        key: 'aa.mp4',
         title: 'ああ',
       },
       {
-        url: 'https://dummy2',
+        key: 'bb.mp4',
         title: 'いい',
       },
     ]);

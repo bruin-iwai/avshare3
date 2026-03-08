@@ -2,6 +2,7 @@
   "name": "@avshare3/api",
   "version": "1.0.0",
   "private": true,
+  "types": "./types/index.d.ts",
   "scripts": {
     "start": "node dist/index.js",
     "build": "node build.mjs",
@@ -23,7 +24,6 @@
     "typebox": "^1.1.6"
   },
   "devDependencies": {
-    "@avshare3/types": "*",
     "@types/http-errors": "^2.0.5",
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.27.3"

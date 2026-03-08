@@ -1,48 +1,35 @@
-import type { FastifyPluginAsync } from 'fastify';
+import { Type, type FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { fetchContentsList } from '~/services/fetchContentsList';
-import type { IContentsListQuerystring, UrlInfoType } from '@avshare3/types';
+import { ContentInfoSchema } from '~/types/contentInfoType';
 
-export const contentsListRouter: FastifyPluginAsync = async (fastify, _opts) => {
-  fastify.get<{
-    Querystring: IContentsListQuerystring;
-    Reply: UrlInfoType[];
-  }>(
+export const contentsListRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
+  fastify.get(
     '/contentsList',
     {
       schema: {
         summary: 'Get contents list',
         tags: ['general'],
-        querystring: {
-          type: 'object',
-          properties: {
-            prefix: { type: 'string' },
-          },
-        },
+        querystring: Type.Object({
+          prefix: Type.String(),
+        }),
         response: {
-          '200': {
+          '200': Type.Array(ContentInfoSchema, {
             description: 'Successful response',
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                href: { type: 'string' },
-                title: { type: 'string' },
-              },
+          }),
+          default: Type.Object(
+            {
+              statusCode: Type.Number(),
+              error: Type.String(),
+              message: Type.String(),
             },
-          },
-          default: {
-            description: 'Unsuccessful response',
-            type: 'object',
-            properties: {
-              statusCode: { type: 'number' },
-              error: { type: 'string' },
-              message: { type: 'string' },
+            {
+              description: 'Unsuccessful response',
             },
-          },
+          ),
         },
       },
     },
-    async (req, _reply) => {
+    async (req) => {
       const { prefix } = req.query;
       if (!prefix) {
         return [];

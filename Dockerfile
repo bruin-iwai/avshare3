@@ -10,7 +10,7 @@ RUN apt-get -y update \
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0-rc1 /lambda-adapter /opt/extensions/lambda-adapter
 
 WORKDIR /usr/src/app
-COPY --parents ./package*.json ./packages/api/package.json ./packages/gui/package.json ./packages/types/package.json ./
+COPY --parents ./package*.json ./packages/api/package.json ./packages/gui/package.json ./
 RUN npm ci
 COPY . ./
 RUN npm run build -w @avshare3/api \

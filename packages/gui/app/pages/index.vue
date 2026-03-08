@@ -11,14 +11,16 @@
         persistent-placeholder
       />
       <v-sheet v-if="prefix">
-        <v-list>
-          <v-list-item
-            v-for="(item, i) in urls"
-            :key="i"
-            :title="item.title"
-            :href="item.href"
-            target="_blank"
-          />
+        <v-list class="d-flex flex-column">
+          <v-lite-item v-for="item in contents" :key="item.key" :value="item.key">
+            <div class="px-2 py-1">
+              <span
+                class="text-blue-600 underline cursor-pointer"
+                @click="() => onClick(item.key)"
+                >{{ item.title }}</span
+              >
+            </div>
+          </v-lite-item>
         </v-list>
       </v-sheet>
     </div>
@@ -27,7 +29,9 @@
 </template>
 
 <script setup lang="ts">
-const { prefix, urls } = storeToRefs(useContentsStore());
+const contentsStore = useContentsStore();
+const { prefix, contents } = storeToRefs(contentsStore);
+const { onClick } = contentsStore;
 </script>
 
 <style scoped>

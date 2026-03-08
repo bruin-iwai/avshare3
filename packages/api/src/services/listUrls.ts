@@ -1,19 +1,16 @@
-import { generateSignedUrl, getS3Object } from '~/repositories';
-import type { IndexSchema, UrlInfoType } from '@avshare3/types';
+import { getS3Object } from '~/repositories';
+import type { ContentInfoType } from '~/types/contentInfoType';
 
-export const listUrls = async (bucket: string, prefix: string) => {
-  // S3からindex.jsonをダウンロード
+type IndexSchema = {
+  title: string;
+  files: {
+    file: string;
+    title: string;
+  }[];
+};
+
+export const listUrls = async (bucket: string, prefix: string): Promise<ContentInfoType[]> => {
   const data = await getS3Object(bucket, `${prefix}/index.json`);
   const index = JSON.parse(data) as IndexSchema;
-
-  // index.jsonのfiles[].{file, title}を取得し、fileをsingedUrlに変換する
-  const urls: UrlInfoType[] = [];
-  for await (const item of index.files) {
-    const url = await generateSignedUrl(bucket, `${prefix}/${item.file}`);
-    urls.push({
-      href: url,
-      title: item.title,
-    });
-  }
-  return urls;
+  return index.files.map((item) => ({ key: item.file, title: item.title }));
 };
