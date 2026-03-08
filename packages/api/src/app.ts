@@ -6,7 +6,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyCors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
-import { rootRouter, contentsListRouter } from '~/api';
+import { rootRouter, contentsListRouter, getSignedUrlRouter } from '~/api';
 
 export const createApp = async () => {
   const fastify = Fastify({
@@ -63,6 +63,7 @@ export const createApp = async () => {
 
   fastify.register(rootRouter, { prefix: '/api' });
   fastify.register(contentsListRouter, { prefix: '/api' });
+  fastify.register(getSignedUrlRouter, { prefix: '/api' });
 
   return fastify;
 };

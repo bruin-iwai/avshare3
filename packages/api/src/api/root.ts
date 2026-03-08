@@ -1,6 +1,6 @@
-import type { FastifyPluginAsync } from 'fastify';
+import { Type, type FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 
-export const rootRouter: FastifyPluginAsync = async (fastify, _opts) => {
+export const rootRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
   fastify.get(
     '/',
     {
@@ -8,16 +8,13 @@ export const rootRouter: FastifyPluginAsync = async (fastify, _opts) => {
         summary: 'Hello world',
         tags: ['general'],
         response: {
-          '200': {
-            type: 'object',
-            properties: {
-              message: { type: 'string' },
-            },
-          },
+          '200': Type.Object({
+            message: Type.String(),
+          }),
         },
       },
     },
-    async (_req, _reply) => {
+    async (_req) => {
       return { message: 'Hello world' };
     },
   );

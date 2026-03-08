@@ -8,12 +8,12 @@ const mockFetchContentsList = vi.mocked(fetchContentsList);
 
 describe('contentsList', () => {
   test('contentsList', async () => {
-    const urlInfoList = [
-      { href: 'a', title: 'あ' },
-      { href: 'b', title: 'い' },
-      { href: 'c', title: 'う' },
+    const contentsInfoList = [
+      { key: 'a', title: 'あ' },
+      { key: 'b', title: 'い' },
+      { key: 'c', title: 'う' },
     ];
-    mockFetchContentsList.mockResolvedValueOnce(urlInfoList);
+    mockFetchContentsList.mockResolvedValueOnce(contentsInfoList);
 
     const fastify = Fastify();
     fastify.register(contentsListRouter);
@@ -26,7 +26,7 @@ describe('contentsList', () => {
 
     expect(statusCode).toBe(200);
     expect(headers['content-type']).toEqual('application/json; charset=utf-8');
-    expect(body).toEqual(JSON.stringify(urlInfoList));
+    expect(body).toEqual(JSON.stringify(contentsInfoList));
 
     expect(mockFetchContentsList).toBeCalledTimes(1);
     expect(mockFetchContentsList).toBeCalledWith('mine');

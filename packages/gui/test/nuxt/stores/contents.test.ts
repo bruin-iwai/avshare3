@@ -39,20 +39,20 @@ describe('useContentsStore', () => {
 
   test('fetch', async () => {
     const contentsStore = scope.run(() => useContentsStore());
-    const { prefix, urls } = storeToRefs(contentsStore!);
+    const { prefix, contents } = storeToRefs(contentsStore!);
     mockFetch.mockResolvedValueOnce([
-      { title: 'ppp', href: 'http://example.com' },
-      { title: 'qqq', href: 'http://whoami.com' },
+      { title: 'ppp', key: 'aaa.mp4' },
+      { title: 'qqq', key: 'bbb.mp4' },
     ]);
 
-    expect(urls.value).toEqual([]);
+    expect(contents.value).toEqual([]);
 
     prefix.value = 'someValue';
     await nextTick();
 
-    expect(urls.value).toEqual([
-      { title: 'ppp', href: 'http://example.com' },
-      { title: 'qqq', href: 'http://whoami.com' },
+    expect(contents.value).toEqual([
+      { title: 'ppp', key: 'aaa.mp4' },
+      { title: 'qqq', key: 'bbb.mp4' },
     ]);
     expect(mockFetch).toHaveBeenCalledOnce();
     expect(mockFetch).toHaveBeenCalledWith('/contentsList', {

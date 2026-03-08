@@ -11,7 +11,7 @@
     "nuxt:prepare": "nuxt prepare || echo nuxt prepare failed"
   },
   "devDependencies": {
-    "@avshare3/types": "*",
+    "@avshare3/api": "*",
     "@nuxt/test-utils": "^4.0.0",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.8.3",
@@ -19,7 +19,6 @@
     "vuetify-nuxt-module": "^0.19.5"
   },
   "dependencies": {
-    "@avshare3/api": "*",
     "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.11.3",
     "nuxt": "^4.3.1",
