@@ -75,12 +75,12 @@ jobs:
 
       # SAM deploy
       - name: SAM setup
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         uses: aws-actions/setup-sam@d78e1a4a9656d3b223e59b80676a797f20093133 # v2
         with:
           use-installer: true
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: SAM deploy
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           sam deploy --parameter-overrides "ImageUri=${{ steps.meta.outputs.tags }}" "SecretVersionId=7ff5852d-b076-4735-8e72-2d759bf050ce"
