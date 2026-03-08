@@ -13,18 +13,18 @@ export const createApp = async () => {
     logger: true,
   });
 
-  // CloudFront から付与する秘密の値（環境変数で管理）
-  const APP_RESTRICTION_KEY = process.env.APP_RESTRICTION_KEY;
+  // // CloudFront から付与する秘密の値（環境変数で管理）
+  // const APP_RESTRICTION_KEY = process.env.APP_RESTRICTION_KEY;
 
-  // すべてのリクエストで CloudFront ヘッダーを検証
-  fastify.addHook('onRequest', async (request, reply) => {
-    const headerValue = request.headers['x-app-restriction-key'];
+  // // すべてのリクエストで CloudFront ヘッダーを検証
+  // fastify.addHook('onRequest', async (request, reply) => {
+  //   const headerValue = request.headers['x-app-restriction-key'];
 
-    if (headerValue !== APP_RESTRICTION_KEY) {
-      reply.code(403).send({ error: 'Forbidden' });
-      return reply;
-    }
-  });
+  //   if (headerValue !== APP_RESTRICTION_KEY) {
+  //     reply.code(403).send({ error: 'Forbidden' });
+  //     return reply;
+  //   }
+  // });
 
   fastify.register(fastifyHelmet, {
     contentSecurityPolicy: {
