@@ -28,7 +28,6 @@ Resources:
         Variables:
           RUST_LOG: info
           BUCKET_NAME: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::${SecretVersionId}}}'
-          APP_RESTRICTION_KEY: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:APP_RESTRICTION_KEY::${SecretVersionId}}}'
           CORS_ENABLED: !Ref CorsEnabled
           PORT: !Ref Port
       MemorySize: 1024
