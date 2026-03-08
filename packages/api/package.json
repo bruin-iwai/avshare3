@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@avshare3/types": "*",
-    "aws-sdk-client-mock-vitest": "^7.0.1"
+    "aws-sdk-client-mock-vitest": "^7.0.1",
+    "esbuild": "^0.27.3"
   }
 }

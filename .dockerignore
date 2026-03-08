@@ -1,7 +1,9 @@
 .dockerignore
+.git
 Dockerfile
 **/node_modules
 **/.env
 **/.nuxt
 **/.output
 **/dist
+**/.aws-sam

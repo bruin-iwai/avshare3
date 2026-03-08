@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 29
+
+Parameters:
+  ImageUri:
+    Type: String
+  SecretVersionId:
+    Type: String
+  CorsEnabled:
+    Type: String
+    Default: 'true'
+  Port:
+    Type: Number
+    Default: '8080'
+
+Resources:
+  MyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageUri: !Ref ImageUri
+      Environment:
+        Variables:
+          RUST_LOG: info
+          BUCKET_NAME: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::${SecretVersionId}}}'
+          APP_RESTRICTION_KEY: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:APP_RESTRICTION_KEY::${SecretVersionId}}}'
+          CORS_ENABLED: !Ref CorsEnabled
+          PORT: !Ref Port
+      MemorySize: 1024
+      AutoPublishAlias: current
+      DeploymentPreference:
+        Type: AllAtOnce
+    Connectors:
+      MyBucketConnector:
+        Properties:
+          Destination:
+            Type: AWS::S3::Bucket
+            Arn: !Sub 'arn:aws:s3:::{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::${SecretVersionId}}}'
+          Permissions:
+            - Read
+
+  # AWS::Serverless::Function の FunctionUrlConfig ではエイリアス (Qualifier) 込みの Function URL を定義できないため
+  # 明示的に AWS::Lambda::Url リソースとして宣言する
+  MyFunctionCurrentUrlConfig:
+    Type: AWS::Lambda::Url
+    DependsOn: MyFunctionAliascurrent
+    Properties:
+      AuthType: AWS_IAM
+      Cors:
+        AllowOrigins:
+          - '*'
+      Qualifier: current
+      TargetFunctionArn: !GetAtt MyFunction.Arn
+
+  MyFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunctionUrl
+      FunctionName: !Sub "${MyFunction}:current"
+      FunctionUrlAuthType: AWS_IAM
+      Principal: cloudfront.amazonaws.com
+      SourceArn: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::${SecretVersionId}}}'
+
+  MyFunctionPermission2:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Sub "${MyFunction}:current"
+      InvokedViaFunctionUrl: true
+      Principal: cloudfront.amazonaws.com
+      SourceArn: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::${SecretVersionId}}}'
+
+Outputs:
+  MyFunction:
+    Description: My Lambda Function ARN
+    Value: !GetAtt MyFunction.Arn
+  MyFunctionIamRole:
+    Description: Implicit IAM Role created for my function
+    Value: !GetAtt MyFunctionRole.Arn
+  MyFunctionUrl:
+    Description: My Lambda Function URL
+    Value: !GetAtt MyFunctionCurrentUrlConfig.FunctionUrl
