@@ -72,4 +72,4 @@ jobs:
       - name: SAM deploy
         if: github.event_name != 'pull_request'
         run: |
-          sam deploy --parameter-overrides "ImageUri=${{ steps.meta.outputs.tags }}"
+          sam deploy --parameter-overrides "ImageUri=${{ steps.meta.outputs.tags }}" "SecretVersionId=7ff5852d-b076-4735-8e72-2d759bf050ce"

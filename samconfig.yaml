@@ -12,5 +12,3 @@ default:
       fail_on_empty_changeset: false
       resolve_image_repos: false
       stack_name: avshare3-api
-      parameter_overrides: >-
-        "SecretVersionId=7ff5852d-b076-4735-8e72-2d759bf050ce"
