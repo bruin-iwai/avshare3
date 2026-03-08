@@ -42,6 +42,10 @@ jobs:
       id-token: write
       contents: read
     steps:
+      # docker 系アクションは github context を直接参照するので checkout 不要だが、
+      # sam cli が samconfig.yaml を見つけるために必要なので checkout しておく
+      - uses: actions/checkout@v6
+
       # Signin to AWS
       - uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
         with:
@@ -68,6 +72,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
       # SAM deploy
+      - name: SAM setup
+        if: github.event_name != 'pull_request'
+        uses: aws-actions/setup-sam@d78e1a4a9656d3b223e59b80676a797f20093133 # v2
+        with:
+          use-installer: true
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: SAM deploy
         if: github.event_name != 'pull_request'
         run: |
