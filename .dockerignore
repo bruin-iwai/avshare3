@@ -7,3 +7,5 @@ Dockerfile
 **/.output
 **/dist
 **/.aws-sam
+.github
+coverage
