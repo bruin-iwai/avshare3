@@ -8,8 +8,7 @@ export const listUrls = async (bucket: string, prefix: string) => {
 
   // index.jsonのfiles[].{file, title}を取得し、fileをsingedUrlに変換する
   const urls: UrlInfoType[] = [];
-  for (let i = 0; i < index.files.length; i++) {
-    const item = index.files[i];
+  for await (const item of index.files) {
     const url = await generateSignedUrl(bucket, `${prefix}/${item.file}`);
     urls.push({
       href: url,
