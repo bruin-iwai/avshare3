@@ -61,6 +61,7 @@ Resources:
       FunctionName: !GetAtt MyFunctionAliascurrent.AliasArn
       FunctionUrlAuthType: AWS_IAM
       Principal: cloudfront.amazonaws.com
+      SourceAccount: !Ref AWS::AccountId
       SourceArn: '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::}}'
 
   MyFunctionPermission2:
@@ -70,6 +71,7 @@ Resources:
       FunctionName: !GetAtt MyFunctionAliascurrent.AliasArn
       InvokedViaFunctionUrl: true
       Principal: cloudfront.amazonaws.com
+      SourceAccount: !Ref AWS::AccountId
       SourceArn: '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::}}'
 
 Outputs:
