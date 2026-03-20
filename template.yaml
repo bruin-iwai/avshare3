@@ -9,8 +9,6 @@ Globals:
 Parameters:
   ImageUri:
     Type: String
-  SecretVersionId:
-    Type: String
   CorsEnabled:
     Type: String
     Default: 'true'
@@ -27,7 +25,7 @@ Resources:
       Environment:
         Variables:
           RUST_LOG: info
-          BUCKET_NAME: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::${SecretVersionId}}}'
+          BUCKET_NAME: '{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::}}'
           CORS_ENABLED: !Ref CorsEnabled
           PORT: !Ref Port
       MemorySize: 1024
@@ -39,7 +37,7 @@ Resources:
         Properties:
           Destination:
             Type: AWS::S3::Bucket
-            Arn: !Sub 'arn:aws:s3:::{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::${SecretVersionId}}}'
+            Arn: 'arn:aws:s3:::{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::}}'
           Permissions:
             - Read
 
@@ -63,7 +61,7 @@ Resources:
       FunctionName: !GetAtt MyFunctionAliascurrent.AliasArn
       FunctionUrlAuthType: AWS_IAM
       Principal: cloudfront.amazonaws.com
-      SourceArn: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::${SecretVersionId}}}'
+      SourceArn: '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::}}'
 
   MyFunctionPermission2:
     Type: AWS::Lambda::Permission
@@ -72,7 +70,7 @@ Resources:
       FunctionName: !GetAtt MyFunctionAliascurrent.AliasArn
       InvokedViaFunctionUrl: true
       Principal: cloudfront.amazonaws.com
-      SourceArn: !Sub '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::${SecretVersionId}}}'
+      SourceArn: '{{resolve:secretsmanager:avshare3/envvars:SecretString:MyDistributionArn::}}'
 
 Outputs:
   MyFunction:
