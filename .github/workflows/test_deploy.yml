@@ -84,5 +84,13 @@ jobs:
         if: github.event_name != 'pull_request'
         env:
           IMAGE_URI: ${{ steps.meta.outputs.tags }}
+          FUNCTION_NAME: ${{ secrets.FUNCTION_NAME }}
+          REGION: ap-northeast-1
         run: |
-          sam deploy --parameter-overrides "ImageUri=${IMAGE_URI}" "SecretVersionId=7ff5852d-b076-4735-8e72-2d759bf050ce"
+          if sam deploy --parameter-overrides "ImageUri=${IMAGE_URI}"; then
+            echo "デプロイに成功しました。"
+            ./pruneLambdaVersions.sh
+          else
+            echo "デプロイに失敗しました。"
+            exit 1
+          fi
