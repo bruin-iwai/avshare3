@@ -5,7 +5,9 @@ version: 2
 registries:
   ecr-public:
     type: docker-registry
-    url: public.ecr.aws
+    url: https://public.ecr.aws
+    username: dummy
+    password: dummy
 
 updates:
   - package-ecosystem: "github-actions"
