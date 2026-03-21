@@ -48,4 +48,4 @@ updates:
       interval: "weekly"
       day: friday
     registries:
-      - "*"
+      - ecr-public
