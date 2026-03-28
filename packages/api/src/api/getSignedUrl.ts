@@ -1,9 +1,10 @@
 import { Type, type FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import createHttpError from 'http-errors';
-import { keyToSignedUrl } from '~/services/keyToSignedUrl';
+import { keyToSignedUrl } from '~/services/keyToSignedUrl.js';
 
 const { BadRequest } = createHttpError;
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getSignedUrlRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
   fastify.get(
     '/getSignedUrl',

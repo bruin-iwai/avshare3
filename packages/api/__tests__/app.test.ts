@@ -1,8 +1,8 @@
 import { vi, describe, test, expect } from 'vitest';
-import { fetchContentsList } from '~/services/fetchContentsList';
-import { createApp } from '~/app';
+import { fetchContentsList } from '~/services/fetchContentsList.js';
+import { createApp } from '~/app.js';
 
-vi.mock('~/services/fetchContentsList');
+vi.mock('~/services/fetchContentsList.js');
 const mockFetchContentsList = vi.mocked(fetchContentsList);
 
 describe('app', () => {

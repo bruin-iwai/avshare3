@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import Fastify from 'fastify';
-import { rootRouter } from '~/api';
+import { rootRouter } from '~/api/index.js';
 
 describe('root', () => {
   test('root', async () => {

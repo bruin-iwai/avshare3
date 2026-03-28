@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
-import { generateSignedUrl } from '~/repositories/generateSignedUrl';
-import { getS3Object } from '~/repositories/getS3Object';
-import * as repositories from '~/repositories';
+import { generateSignedUrl } from '~/repositories/generateSignedUrl.js';
+import { getS3Object } from '~/repositories/getS3Object.js';
+import * as repositories from '~/repositories/index.js';
 
 describe('repositories', () => {
   test('index', () => {
