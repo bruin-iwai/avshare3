@@ -2,7 +2,7 @@ import { Readable } from 'node:stream';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { sdkStreamMixin } from '@smithy/util-stream';
 import { mockClient } from 'aws-sdk-client-mock';
-import { listUrls } from '~/services/listUrls';
+import { listUrls } from '~/services/listUrls.js';
 import { describe, expect, test } from 'vitest';
 
 const s3Mock = mockClient(S3Client);

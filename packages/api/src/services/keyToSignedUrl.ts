@@ -1,4 +1,4 @@
-import { generateSignedUrl } from '~/repositories';
+import { generateSignedUrl } from '~/repositories/index.js';
 
 export const keyToSignedUrl = async (prefix: string, key: string) => {
   const bucket = process.env.BUCKET_NAME!;

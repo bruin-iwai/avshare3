@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
-import { contentsListRouter } from '~/api/contentsList';
-import { rootRouter } from '~/api/root';
-import * as api from '~/api';
+import { contentsListRouter } from '~/api/contentsList.js';
+import { rootRouter } from '~/api/root.js';
+import * as api from '~/api/index.js';
 
 describe('api', () => {
   test('index', () => {

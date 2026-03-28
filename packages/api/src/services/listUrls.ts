@@ -1,5 +1,5 @@
-import { getS3Object } from '~/repositories';
-import type { ContentInfoType } from '~/types/contentInfoType';
+import { getS3Object } from '~/repositories/index.js';
+import type { ContentInfoType } from '~/types/contentInfoType.js';
 
 type IndexSchema = {
   title: string;

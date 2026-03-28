@@ -1,5 +1,6 @@
 import { Type, type FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const rootRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
   fastify.get(
     '/',
@@ -14,8 +15,6 @@ export const rootRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
         },
       },
     },
-    async (_req) => {
-      return { message: 'Hello world' };
-    },
+    (_req) => ({ message: 'Hello world' }),
   );
 };

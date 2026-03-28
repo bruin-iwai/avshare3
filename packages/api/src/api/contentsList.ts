@@ -1,7 +1,8 @@
 import { Type, type FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import { fetchContentsList } from '~/services/fetchContentsList';
-import { ContentInfoSchema } from '~/types/contentInfoType';
+import { fetchContentsList } from '~/services/fetchContentsList.js';
+import { ContentInfoSchema } from '~/types/contentInfoType.js';
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const contentsListRouter: FastifyPluginAsyncTypebox = async (fastify, _opts) => {
   fastify.get(
     '/contentsList',

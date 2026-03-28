@@ -1,9 +1,9 @@
 import { vi, describe, test, expect } from 'vitest';
 import Fastify from 'fastify';
-import { contentsListRouter } from '~/api';
-import { fetchContentsList } from '~/services/fetchContentsList';
+import { contentsListRouter } from '~/api/index.js';
+import { fetchContentsList } from '~/services/fetchContentsList.js';
 
-vi.mock('~/services/fetchContentsList');
+vi.mock('~/services/fetchContentsList.js');
 const mockFetchContentsList = vi.mocked(fetchContentsList);
 
 describe('contentsList', () => {

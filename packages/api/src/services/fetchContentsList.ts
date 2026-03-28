@@ -1,5 +1,5 @@
-import { listUrls } from './listUrls';
-import type { ContentInfoType } from '~/types/contentInfoType';
+import { listUrls } from './listUrls.js';
+import type { ContentInfoType } from '~/types/contentInfoType.js';
 
 export const fetchContentsList = async (prefix: string): Promise<ContentInfoType[]> => {
   const bucket = process.env.BUCKET_NAME!;
