@@ -6,8 +6,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: friday
+      interval: weekly
     cooldown:
       default-days: 3
 
@@ -16,8 +15,7 @@ updates:
       - "/"
       - "/packages/*"
     schedule:
-      interval: "weekly"
-      day: friday
+      interval: weekly
     groups:
       aws-sdk-group:
         patterns:
@@ -42,8 +40,7 @@ updates:
     directory: "/"
     # Check for updates once a week
     schedule:
-      interval: "weekly"
-      day: friday
+      interval: weekly
     registries:
       - ecr-public
     cooldown:
