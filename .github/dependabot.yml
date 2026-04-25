@@ -8,6 +8,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    labels:
+      - dependabot
+      - github_actions
     cooldown:
       default-days: 3
 
@@ -18,6 +21,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    labels:
+      - dependabot
+      - dependencies
     groups:
       aws-sdk-group:
         patterns:
@@ -44,6 +50,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    labels:
+      - dependabot
+      - docker
     registries:
       - ecr-public
     cooldown:
