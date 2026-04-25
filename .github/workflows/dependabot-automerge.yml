@@ -99,11 +99,11 @@ jobs:
       - name: Validate GitHub App configuration
         if: steps.evaluate.outputs.eligible == 'true'
         env:
-          AUTOMERGE_APP_ID: ${{ vars.DEPENDABOT_AUTOMERGE_APP_ID }}
+          AUTOMERGE_CLIENT_ID: ${{ vars.DEPENDABOT_AUTOMERGE_CLIENT_ID }}
           AUTOMERGE_APP_PRIVATE_KEY: ${{ secrets.DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY }}
         run: |
-          if [ -z "$AUTOMERGE_APP_ID" ]; then
-            echo "::error title=Missing GitHub App ID::Repository variable DEPENDABOT_AUTOMERGE_APP_ID is not set."
+          if [ -z "$AUTOMERGE_CLIENT_ID" ]; then
+            echo "::error title=Missing GitHub Client ID::Repository variable DEPENDABOT_AUTOMERGE_CLIENT_ID is not set."
             exit 1
           fi
 
@@ -117,7 +117,7 @@ jobs:
         if: steps.evaluate.outputs.eligible == 'true'
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         with:
-          client-id: ${{ vars.DEPENDABOT_AUTOMERGE_APP_ID }}
+          client-id: ${{ vars.DEPENDABOT_AUTOMERGE_CLIENT_ID }}
           private-key: ${{ secrets.DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
           repositories: ${{ github.event.repository.name }}
@@ -166,13 +166,13 @@ jobs:
           # - GITHUB_TOKEN は branch protection / ruleset を bypass できない
           # - review / update-branch を bypass する実行主体を GitHub App に揃える
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          AUTOMERGE_APP_ID_VARIABLE: DEPENDABOT_AUTOMERGE_APP_ID
+          AUTOMERGE_CLIENT_ID_VARIABLE: DEPENDABOT_AUTOMERGE_CLIENT_ID
           AUTOMERGE_APP_KEY_SECRET: DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY
           PR_NUMBER: ${{ steps.evaluate.outputs.pr_number }}
           REPOSITORY: ${{ github.repository }}
         run: |
           if [ -z "$GH_TOKEN" ]; then
-            echo "::error title=Missing GitHub App installation token::Failed to mint an installation token from ${AUTOMERGE_APP_ID_VARIABLE} / ${AUTOMERGE_APP_KEY_SECRET}."
+            echo "::error title=Missing GitHub App installation token::Failed to mint an installation token from ${AUTOMERGE_CLIENT_ID_VARIABLE} / ${AUTOMERGE_APP_KEY_SECRET}."
             exit 1
           fi
 
