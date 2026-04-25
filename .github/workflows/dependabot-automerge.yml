@@ -1,0 +1,224 @@
+name: Dependabot Automerge
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable-automerge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Evaluate PR eligibility
+        id: evaluate
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          DEPENDENCY_GROUP: ${{ steps.metadata.outputs.dependency-group }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request?.number;
+
+            if (!prNumber) {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'No pull request found in this event');
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: prNumber
+            });
+
+            if (pr.state !== 'open') {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'Pull request is not open');
+              return;
+            }
+
+            if (pr.draft) {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'Pull request is draft');
+              return;
+            }
+
+            const allowedBaseBranches = ['main'];
+            if (!allowedBaseBranches.includes(pr.base.ref)) {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', `Base branch is not allowed: ${pr.base.ref}`);
+              return;
+            }
+
+            if (pr.user?.login !== 'dependabot[bot]') {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'Pull request is not from dependabot');
+              return;
+            }
+
+            const updateType = process.env.UPDATE_TYPE || '';
+            const dependencyGroup = process.env.DEPENDENCY_GROUP || '';
+
+            const eligibleUpdateTypes = [
+              'version-update:semver-patch',
+              'version-update:semver-minor'
+            ];
+
+            if (eligibleUpdateTypes.includes(updateType)) {
+              const label = updateType.replace('version-update:semver-', '');
+              core.setOutput('eligible', 'true');
+              core.setOutput('reason', `Eligible (${label})`);
+              core.setOutput('pr_number', String(pr.number));
+              return;
+            }
+
+            // Grouped PRs: fetch-metadata may not resolve update-type.
+            // Our dependabot.yml groups only include minor/patch, so
+            // any grouped PR from dependabot is safe to automerge.
+            if (dependencyGroup) {
+              core.setOutput('eligible', 'true');
+              core.setOutput('reason', `Eligible (grouped: ${dependencyGroup})`);
+              core.setOutput('pr_number', String(pr.number));
+              return;
+            }
+
+            core.setOutput('eligible', 'false');
+            core.setOutput('reason', `Update type is not eligible: ${updateType || 'unknown'}`);
+
+      - name: Validate GitHub App configuration
+        if: steps.evaluate.outputs.eligible == 'true'
+        env:
+          AUTOMERGE_APP_ID: ${{ vars.DEPENDABOT_AUTOMERGE_APP_ID }}
+          AUTOMERGE_APP_PRIVATE_KEY: ${{ secrets.DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$AUTOMERGE_APP_ID" ]; then
+            echo "::error title=Missing GitHub App ID::Repository variable DEPENDABOT_AUTOMERGE_APP_ID is not set."
+            exit 1
+          fi
+
+          if [ -z "$AUTOMERGE_APP_PRIVATE_KEY" ]; then
+            echo "::error title=Missing GitHub App private key::Repository secret DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY is not set."
+            exit 1
+          fi
+
+      - name: Create GitHub App token
+        id: app-token
+        if: steps.evaluate.outputs.eligible == 'true'
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ vars.DEPENDABOT_AUTOMERGE_APP_ID }}
+          private-key: ${{ secrets.DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - name: Wait for project CI check
+        if: steps.evaluate.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ steps.evaluate.outputs.pr_number }}
+          REPOSITORY: ${{ github.repository }}
+          REQUIRED_CHECK_NAME: test-result
+          MAX_ATTEMPTS: 180
+        run: |
+          attempts=0
+
+          while [ "$attempts" -lt "$MAX_ATTEMPTS" ]; do
+            checks_json=$(gh pr checks "$PR_NUMBER" --json name,bucket --repo "$REPOSITORY")
+            test_result_bucket=$(printf '%s' "$checks_json" | jq -r ".[] | select(.name == \"$REQUIRED_CHECK_NAME\") | .bucket" | head -n 1)
+
+            if [ -n "$test_result_bucket" ] && [ "$test_result_bucket" != "null" ]; then
+              echo "Found '$REQUIRED_CHECK_NAME' check with bucket '$test_result_bucket'."
+
+              if [ "$test_result_bucket" = "pass" ]; then
+                exit 0
+              fi
+
+              if [ "$test_result_bucket" = "fail" ] || [ "$test_result_bucket" = "cancel" ]; then
+                echo "::error title=Project CI check failed::Expected '$REQUIRED_CHECK_NAME' to pass before merging, got '$test_result_bucket'."
+                exit 1
+              fi
+            else
+              echo "Waiting for '$REQUIRED_CHECK_NAME' check to appear on PR #$PR_NUMBER..."
+            fi
+
+            attempts=$((attempts + 1))
+            sleep 10
+          done
+
+          echo "::error title=Project CI check did not complete::Timed out waiting for '$REQUIRED_CHECK_NAME' to finish on PR #$PR_NUMBER."
+          exit 1
+
+      - name: Merge Dependabot PR with gh (admin squash)
+        if: steps.evaluate.outputs.eligible == 'true'
+        env:
+          # GitHub App token 使用の理由:
+          # - GITHUB_TOKEN は branch protection / ruleset を bypass できない
+          # - review / update-branch を bypass する実行主体を GitHub App に揃える
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          AUTOMERGE_APP_ID_VARIABLE: DEPENDABOT_AUTOMERGE_APP_ID
+          AUTOMERGE_APP_KEY_SECRET: DEPENDABOT_AUTOMERGE_APP_PRIVATE_KEY
+          PR_NUMBER: ${{ steps.evaluate.outputs.pr_number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error title=Missing GitHub App installation token::Failed to mint an installation token from ${AUTOMERGE_APP_ID_VARIABLE} / ${AUTOMERGE_APP_KEY_SECRET}."
+            exit 1
+          fi
+
+          set +e
+          output=$(gh pr merge "$PR_NUMBER" --admin --squash --repo "$REPOSITORY" 2>&1)
+          exit_code=$?
+          set -e
+
+          if [ "$exit_code" -eq 0 ]; then
+            echo "Dependabot PR merged via gh."
+            exit 0
+          fi
+
+          normalized="${output,,}"
+          if [[ "$normalized" == *"pull request is already merged"* ]] || [[ "$normalized" == *"already merged"* ]]; then
+            echo "Dependabot PR is already merged."
+            exit 0
+          fi
+
+          if [[ "$normalized" == *"required status check"* ]] || [[ "$normalized" == *"required checks"* ]] || [[ "$normalized" == *"checks pending"* ]]; then
+            echo "::error title=Required checks are not satisfied::This workflow only bypasses review and update-branch requirements. Required checks must pass before the admin merge runs."
+            echo "$output"
+            exit "$exit_code"
+          fi
+
+          if [[ "$normalized" == *"approving reviews are required"* ]] || [[ "$normalized" == *"review required"* ]] || [[ "$normalized" == *"reviews are required"* ]]; then
+            echo "::error title=GitHub App bypass is not configured::The GitHub App behind this installation token is still blocked by review requirements. Add the App to the bypass list for the main ruleset."
+            echo "$output"
+            exit "$exit_code"
+          fi
+
+          if [[ "$normalized" == *"out-of-date with the base branch"* ]] || [[ "$normalized" == *"not up to date with the base branch"* ]]; then
+            echo "::error title=GitHub App update-branch bypass is not configured::The GitHub App behind this installation token is still blocked by the up-to-date requirement. Add the App to the bypass list for the main ruleset."
+            echo "$output"
+            exit "$exit_code"
+          fi
+
+          if [[ "$normalized" == *"resource not accessible"* ]] || [[ "$normalized" == *"permission"* ]] || [[ "$normalized" == *"not authorized"* ]] || [[ "$normalized" == *"integration must have"* ]]; then
+            echo "::error title=GitHub App permissions are insufficient::Verify that the app installation has Pull requests: Read and write and Contents: Read and write on this repository."
+            echo "$output"
+            exit "$exit_code"
+          fi
+
+          echo "$output"
+          exit "$exit_code"
+
+      - name: Log skip reason
+        if: steps.evaluate.outputs.eligible != 'true'
+        run: echo "${{ steps.evaluate.outputs.reason }}"
