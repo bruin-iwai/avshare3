@@ -34,10 +34,16 @@ updates:
       aws-sdk-group:
         patterns:
           - "@aws-sdk/*"
+        update-types:
+          - minor
+          - patch
       vitest-group:
         patterns:
           - "vitest"
           - "@vitest/*"
+        update-types:
+          - minor
+          - patch
       eslint-group:
         patterns:
           - eslint
@@ -46,6 +52,9 @@ updates:
           - typescript-eslint
           - "@eslint/*"
           - "@nuxt/eslint"
+        update-types:
+          - minor
+          - patch
     cooldown:
       default-days: 7
 
