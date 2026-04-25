@@ -2,30 +2,48 @@
 
 version: 2
 
+registries:
+  aws-ecr:
+    type: docker-registry
+    url: public.ecr.aws
+    # Amazon ECR Publicはパブリックレジストリのため、認証情報は不要
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: friday
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependabot
+      - github_actions
     cooldown:
-      default-days: 3
+      default-days: 7
 
   - package-ecosystem: "npm"
     directories:
       - "/"
       - "/packages/*"
     schedule:
-      interval: "weekly"
-      day: friday
+      interval: weekly
+    open-pull-requests-limit: 10
+    labels:
+      - dependabot
+      - dependencies
     groups:
       aws-sdk-group:
         patterns:
           - "@aws-sdk/*"
+        update-types:
+          - minor
+          - patch
       vitest-group:
         patterns:
           - "vitest"
           - "@vitest/*"
+        update-types:
+          - minor
+          - patch
       eslint-group:
         patterns:
           - eslint
@@ -34,17 +52,23 @@ updates:
           - typescript-eslint
           - "@eslint/*"
           - "@nuxt/eslint"
+        update-types:
+          - minor
+          - patch
     cooldown:
-      default-days: 3
+      default-days: 7
 
   - package-ecosystem: "docker"
     # Look for a `Dockerfile` in the `root` directory
     directory: "/"
+    registries:
+      - aws-ecr
     # Check for updates once a week
     schedule:
-      interval: "weekly"
-      day: friday
-    registries:
-      - ecr-public
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependabot
+      - docker
     cooldown:
-      default-days: 3
+      default-days: 7
