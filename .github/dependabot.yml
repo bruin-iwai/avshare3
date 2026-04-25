@@ -2,6 +2,12 @@
 
 version: 2
 
+registries:
+  aws-ecr:
+    type: docker-registry
+    url: public.ecr.aws
+    # Amazon ECR Publicはパブリックレジストリのため、認証情報は不要
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -46,6 +52,8 @@ updates:
   - package-ecosystem: "docker"
     # Look for a `Dockerfile` in the `root` directory
     directory: "/"
+    registries:
+      - aws-ecr
     # Check for updates once a week
     schedule:
       interval: weekly
