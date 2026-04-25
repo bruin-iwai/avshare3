@@ -19,6 +19,8 @@ jobs:
     needs: [test, build_and_push]
     if: always() # どちらかのジョブが失敗しても実行する
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Set test result
         run: |
