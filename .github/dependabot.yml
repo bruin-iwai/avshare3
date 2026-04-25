@@ -53,7 +53,5 @@ updates:
     labels:
       - dependabot
       - docker
-    registries:
-      - ecr-public
     cooldown:
       default-days: 3
