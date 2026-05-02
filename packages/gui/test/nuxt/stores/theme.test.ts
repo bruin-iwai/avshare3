@@ -1,6 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { type EffectScope, nextTick } from 'vue';
 
 const mockThemeName = ref('dark');
 
@@ -11,9 +12,16 @@ mockNuxtImport('useTheme', () => () => ({
 }));
 
 describe('useThemeStore', () => {
+  let scope: EffectScope;
+
   beforeEach(() => {
     setActivePinia(createPinia());
+    scope = effectScope();
     mockThemeName.value = 'dark';
+  });
+  afterEach(() => {
+    scope.stop();
+    vi.resetAllMocks();
   });
 
   test('currentTheme', () => {
@@ -26,11 +34,16 @@ describe('useThemeStore', () => {
     expect(isDark.value).toBeTruthy();
   });
 
-  test('isDark (write)', () => {
-    const { isDark, currentTheme } = storeToRefs(useThemeStore());
+  test('isDark (write)', async () => {
+    const themeStore = scope.run(() => useThemeStore());
+    const { isDark, currentTheme } = storeToRefs(themeStore!);
+
     isDark.value = false;
+    await nextTick(); // Wait for the watcher to update the theme
     expect(currentTheme.value).toEqual('light');
+
     isDark.value = true;
+    await nextTick(); // Wait for the watcher to update the theme
     expect(currentTheme.value).toEqual('dark');
   });
 });
