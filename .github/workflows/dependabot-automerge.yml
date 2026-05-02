@@ -15,7 +15,8 @@ jobs:
     if: >-
       (github.event_name == 'pull_request_target' &&
        github.event.pull_request.user.login == 'dependabot[bot]') ||
-      github.event_name == 'check_run'
+      (github.event_name == 'check_run' &&
+       github.event.check_run.name == 'test-result')
     runs-on: ubuntu-latest
     steps:
       - name: debug check_run.name
