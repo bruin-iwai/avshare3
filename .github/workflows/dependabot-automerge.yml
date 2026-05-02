@@ -19,10 +19,6 @@ jobs:
        github.event.check_run.name == 'test-result')
     runs-on: ubuntu-latest
     steps:
-      - name: debug check_run.name
-        if: github.event_name == 'check_run'
-        run: |
-          echo "check_run.name == ${{ github.event.check_run.name }}"
       - name: Fetch Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
