@@ -67,6 +67,23 @@ jobs:
               return;
             }
 
+            // Check for approval from another reviewer
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner,
+              repo,
+              pull_number: prNumber
+            });
+
+            const hasApprovalFromOtherReviewer = reviews.some(review =>
+              review.state === 'APPROVED' && review.user.login !== 'dependabot[bot]'
+            );
+
+            if (!hasApprovalFromOtherReviewer) {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'No approval from another reviewer');
+              return;
+            }
+
             const updateType = process.env.UPDATE_TYPE || '';
             const dependencyGroup = process.env.DEPENDENCY_GROUP || '';
 
