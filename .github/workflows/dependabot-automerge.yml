@@ -34,7 +34,14 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const prNumber = context.payload.pull_request?.number;
+            let prNumber = context.payload.pull_request?.number;
+
+            if (!prNumber && context.eventName === 'check_run') {
+              const pullRequests = context.payload.check_run?.check_suite?.pull_requests || [];
+              if (pullRequests.length > 0) {
+                prNumber = pullRequests[0].number;
+              }
+            }
 
             if (!prNumber) {
               core.setOutput('eligible', 'false');
