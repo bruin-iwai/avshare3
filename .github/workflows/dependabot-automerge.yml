@@ -12,11 +12,7 @@ permissions:
 
 jobs:
   enable-automerge:
-    if: >-
-      (github.event_name == 'pull_request_target' &&
-       github.event.pull_request.user.login == 'dependabot[bot]') ||
-      (github.event_name == 'check_run' &&
-       github.event.check_run.name == 'test-result')
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Dependabot metadata
