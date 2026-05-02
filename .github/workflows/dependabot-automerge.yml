@@ -3,7 +3,8 @@ name: Dependabot Automerge
 on:
   pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
-  check_run:
+  workflow_run:
+    workflows: ['test_deploy.yml']
     types: [completed]
 
 permissions:
@@ -12,16 +13,13 @@ permissions:
 
 jobs:
   enable-automerge:
-    if: >-
+    if: |
       (github.event_name == 'pull_request_target' &&
        github.event.pull_request.user.login == 'dependabot[bot]') ||
-      github.event_name == 'check_run'
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
-      - name: debug check_run.name
-        if: github.event_name == 'check_run'
-        run: |
-          echo "check_run.name == ${{ github.event.check_run.name }}"
       - name: Fetch Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
@@ -39,10 +37,11 @@ jobs:
             const { owner, repo } = context.repo;
             let prNumber = context.payload.pull_request?.number;
 
-            if (!prNumber && context.eventName === 'check_run') {
-              const pullRequests = context.payload.check_run?.check_suite?.pull_requests || [];
-              if (pullRequests.length > 0) {
-                prNumber = pullRequests[0].number;
+            if (!prNumber && context.eventName === 'workflow_run') {
+              const pullRequests = context.payload.workflow_run?.pull_requests || [];
+              const dependabotPR = pullRequests.find(pr => pr.user?.login === 'dependabot[bot]');
+              if (dependabotPR) {
+                prNumber = dependabotPR.number;
               }
             }
 
