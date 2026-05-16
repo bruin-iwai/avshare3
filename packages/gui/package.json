@@ -13,7 +13,7 @@
   "devDependencies": {
     "@avshare3/api": "*",
     "@nuxt/test-utils": "^4.0.3",
-    "@vue/test-utils": "^2.4.8",
+    "@vue/test-utils": "^2.4.10",
     "happy-dom": "^20.9.0",
     "sass-embedded": "^1.99.0",
     "vue-tsc": "^3.2.8",
