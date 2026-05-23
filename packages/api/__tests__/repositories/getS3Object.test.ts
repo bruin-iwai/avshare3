@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { sdkStreamMixin } from '@smithy/util-stream';
+import { sdkStreamMixin } from '@smithy/core/serde';
 import { mockClient } from 'aws-sdk-client-mock';
 import { getS3Object } from '~/repositories/index.js';
 import { Readable } from 'node:stream';
