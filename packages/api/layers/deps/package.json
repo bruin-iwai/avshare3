@@ -1,18 +1,8 @@
 {
-  "name": "@avshare3/api",
+  "name": "@avshare3/api-layers-deps",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
-  "types": "./types/index.d.ts",
-  "scripts": {
-    "start": "node dist/index.mjs",
-    "build": "node build.mjs",
-    "dev": "node --env-file=.env dist/index.mjs"
-  },
   "dependencies": {
-    "esbuild": "^0.28.0"
-  },
-  "devDependencies": {
     "@aws-sdk/client-s3": "^3.1060.0",
     "@aws-sdk/s3-request-presigner": "^3.1060.0",
     "@fastify/compress": "^8.3.1",
@@ -22,8 +12,6 @@
     "@fastify/swagger": "^9.7.0",
     "@fastify/swagger-ui": "^5.2.6",
     "@fastify/type-provider-typebox": "^6.1.0",
-    "@types/http-errors": "^2.0.5",
-    "aws-sdk-client-mock-vitest": "^7.0.1",
     "fastify": "^5.8.5",
     "http-errors": "^2.0.1",
     "pino": "^10.3.1",

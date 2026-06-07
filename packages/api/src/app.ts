@@ -42,7 +42,7 @@ export const createApp = async () => {
   });
 
   fastify.register(fastifyStatic, {
-    root: path.resolve(process.cwd(), '../gui/.output/public'),
+    root: path.resolve(process.cwd(), process.env.GUI_DIST_PATH ?? '../gui/.output/public'),
   });
 
   await fastify.register(fastifySwagger, {
