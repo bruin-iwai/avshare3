@@ -7,8 +7,6 @@ Globals:
     Timeout: 29
 
 Parameters:
-  ImageUri:
-    Type: String
   CorsEnabled:
     Type: String
     Default: 'true'
@@ -17,17 +15,51 @@ Parameters:
     Default: '8080'
 
 Resources:
+  MyFunctionDependenciesLayer:
+    Type: AWS::Serverless::LayerVersion
+    Metadata:
+      BuildMethod: nodejs24.x
+    Properties:
+      LayerName: avshare3-api-dependencies-layer
+      Description: Layer for MyFunction dependencies
+      ContentUri: packages/api/layers/deps
+      CompatibleRuntimes:
+        - nodejs24.x
   MyFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      # Metadata property reference: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-build-typescript.html
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/standalone.ts
+        External:
+          - '@aws-sdk/*'
+          - '@fastify/*'
+          - 'fastify'
+          - 'http-errors'
+          - 'pino'
+          - 'typebox'
+        Format: esm
+        Minify: false
+        OutExtension:
+          - .js=.mjs
+        Target: es2022
     Properties:
-      PackageType: Image
-      ImageUri: !Ref ImageUri
+      Runtime: nodejs24.x
+      CodeUri: packages/api
+      Handler: run.sh
+      Layers:
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28
+        - !Ref MyFunctionDependenciesLayer
       Environment:
         Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
           RUST_LOG: info
           BUCKET_NAME: '{{resolve:secretsmanager:avshare3/envvars:SecretString:BUCKET_NAME::}}'
           CORS_ENABLED: !Ref CorsEnabled
           PORT: !Ref Port
+          GUI_DIST_PATH: ./public
       MemorySize: 1024
       AutoPublishAlias: current
       DeploymentPreference:
