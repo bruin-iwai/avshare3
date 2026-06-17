@@ -14,7 +14,7 @@
     "@avshare3/api": "*",
     "@nuxt/test-utils": "^4.0.3",
     "@pinia/nuxt": "^0.11.3",
-    "@vue/test-utils": "^2.4.10",
+    "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.10.2",
     "sass-embedded": "^1.100.0",
     "vue-tsc": "^3.3.4",
