@@ -28,5 +28,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "overrides": {
+    "vite-plugin-checker": "0.14.1"
+  }
 }
