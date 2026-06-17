@@ -1,5 +1,7 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', 'vuetify-nuxt-module', '@pinia/nuxt', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
   runtimeConfig: {
     public: {
@@ -18,7 +20,21 @@ export default defineNuxtConfig({
     port: 4000,
   },
 
+  build: {
+    transpile: ['vuetify'],
+  },
+
   vite: {
+    plugins: [
+      vuetify({
+        autoImport: true,
+      }),
+    ],
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
     server: {
       hmr: {
         // Nuxt DevTools の制約により devServer.port と同じ値にする
