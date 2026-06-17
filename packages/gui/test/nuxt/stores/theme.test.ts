@@ -1,15 +1,21 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { type EffectScope, nextTick } from 'vue';
 
 const mockThemeName = ref('dark');
 
-mockNuxtImport('useTheme', () => () => ({
-  global: {
-    name: mockThemeName,
-  },
-}));
+// useTheme() は自動インポート対象ではないので mockNuxtImport ではなく vi.mock() を使う
+vi.mock('vuetify', async () => {
+  const actual = await vi.importActual<typeof import('vuetify')>('vuetify');
+  return {
+    ...actual,
+    useTheme: () => ({
+      global: {
+        name: mockThemeName,
+      },
+    }),
+  };
+});
 
 describe('useThemeStore', () => {
   let scope: EffectScope;
