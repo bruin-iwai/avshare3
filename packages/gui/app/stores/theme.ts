@@ -1,3 +1,5 @@
+import { useTheme } from 'vuetify';
+
 export const useThemeStore = defineStore('theme', () => {
   const isDark = ref(true);
 
