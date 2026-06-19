@@ -23,7 +23,7 @@
     "@fastify/swagger-ui": "^5.2.6",
     "@fastify/type-provider-typebox": "^6.1.0",
     "@types/http-errors": "^2.0.5",
-    "aws-sdk-client-mock-vitest": "^7.0.1",
+    "aws-sdk-client-mock-vitest": "^7.1.0",
     "fastify": "^5.8.5",
     "http-errors": "^2.0.1",
     "pino": "^10.3.1",
