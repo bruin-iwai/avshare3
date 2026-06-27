@@ -1,7 +1,6 @@
 import path from 'node:path';
 import Fastify from 'fastify';
 import fastifyHelmet from '@fastify/helmet';
-import fastifyCompress from '@fastify/compress';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyCors from '@fastify/cors';
@@ -36,7 +35,7 @@ export const createApp = async () => {
       },
     },
   });
-  await fastify.register(fastifyCompress, { encodings: ['br', 'gzip', 'deflate'] });
+  await fastify.register(import('@fastify/compress'));
   await fastify.register(fastifyCors, {
     origin: process.env.CORS_ENABLED === 'true',
   });
