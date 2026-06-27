@@ -15,7 +15,7 @@
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1075.0",
     "@aws-sdk/s3-request-presigner": "^3.1075.0",
-    "@fastify/compress": "^8.3.1",
+    "@fastify/compress": "^9.0.0",
     "@fastify/cors": "^11.2.0",
     "@fastify/helmet": "^13.0.2",
     "@fastify/static": "^9.1.1",
