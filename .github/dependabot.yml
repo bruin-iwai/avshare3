@@ -24,6 +24,7 @@ updates:
     directories:
       - "/"
       - "/packages/*"
+      - "/packages/api/layers/deps"
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
