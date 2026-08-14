@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.20
-FROM public.ecr.aws/docker/library/node:24.14-trixie-slim
+FROM node:24.19-slim
 RUN apt-get -y update \
   && apt-get -y upgrade \
   # && apt-get --no-install-recommends -y install \
