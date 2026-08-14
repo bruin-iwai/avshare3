@@ -50,6 +50,19 @@ updates:
         update-types:
           - minor
           - patch
+      fastify-group:
+        patterns:
+          - fastify
+          - "@fastify/*"
+        update-types:
+          - minor
+          - patch
+      other-group:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
     cooldown:
       default-days: 7
 
