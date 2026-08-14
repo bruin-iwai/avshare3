@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.20
-FROM node:24.19-slim
+FROM node:26.7-slim
 RUN apt-get -y update \
   && apt-get -y upgrade \
   # && apt-get --no-install-recommends -y install \
