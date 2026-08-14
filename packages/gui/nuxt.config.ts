@@ -36,7 +36,7 @@ export default defineNuxtConfig({
       },
     },
     server: {
-      hmr: {
+      ws: {
         // Nuxt DevTools の制約により devServer.port と同じ値にする
         // port: 24678,
         port: 4000,
