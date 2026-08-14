@@ -160,3 +160,6 @@ node_modules
 auto-imports.d.ts
 
 *.http
+
+# Nuxt が自動生成するローカル設定ファイルを反映させない
+.nuxtrc
