@@ -11,8 +11,8 @@
         persistent-placeholder
       />
       <v-sheet v-if="prefix">
-        <v-list class="d-flex flex-column">
-          <v-lite-item v-for="item in contents" :key="item.key" :value="item.key">
+        <v-list :items="contents" item-value="key" item-title="title" class="d-flex flex-column">
+          <template #title="{ item }">
             <div class="px-2 py-1">
               <span
                 class="text-blue-600 underline cursor-pointer"
@@ -20,7 +20,7 @@
                 >{{ item.title }}</span
               >
             </div>
-          </v-lite-item>
+          </template>
         </v-list>
       </v-sheet>
     </div>
