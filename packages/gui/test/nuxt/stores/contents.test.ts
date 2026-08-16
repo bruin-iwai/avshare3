@@ -1,7 +1,7 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { setActivePinia, createPinia } from 'pinia';
 import { afterEach, beforeEach, describe, expect, test, vitest } from 'vitest';
-import { type EffectScope, nextTick } from 'vue';
+import type { EffectScope } from 'vue';
 
 const { mockFetch } = vitest.hoisted(() => ({
   mockFetch: vitest.fn(),
@@ -48,12 +48,13 @@ describe('useContentsStore', () => {
     expect(contents.value).toEqual([]);
 
     prefix.value = 'someValue';
-    await nextTick();
+    await vitest.waitFor(() => {
+      expect(contents.value).toEqual([
+        { title: 'ppp', key: 'aaa.mp4' },
+        { title: 'qqq', key: 'bbb.mp4' },
+      ]);
+    });
 
-    expect(contents.value).toEqual([
-      { title: 'ppp', key: 'aaa.mp4' },
-      { title: 'qqq', key: 'bbb.mp4' },
-    ]);
     expect(mockFetch).toHaveBeenCalledOnce();
     expect(mockFetch).toHaveBeenCalledWith('/contentsList', {
       method: 'GET',
