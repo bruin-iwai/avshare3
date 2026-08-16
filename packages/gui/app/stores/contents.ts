@@ -2,9 +2,18 @@ import type { ContentInfoType } from '@avshare3/api';
 
 export const useContentsStore = defineStore('contents', () => {
   const prefix = ref('');
-  const contents = ref<ContentInfoType[]>([]);
 
   const api = useApi();
+
+  const contents = computedAsync<ContentInfoType[]>(async () => {
+    if (!prefix.value) {
+      return [];
+    }
+    return await api<ContentInfoType[]>('/contentsList', {
+      method: 'GET',
+      query: { prefix: prefix.value },
+    });
+  }, []);
 
   const onClick = async (key: string) => {
     if (!prefix.value || !key) {
@@ -24,21 +33,8 @@ export const useContentsStore = defineStore('contents', () => {
     });
   };
 
-  watchEffect(async () => {
-    if (!prefix.value) {
-      return;
-    }
-
-    const res = await api<ContentInfoType[]>('/contentsList', {
-      method: 'GET',
-      query: { prefix: prefix.value },
-    });
-    contents.value = res;
-  });
-
   const $reset = () => {
     prefix.value = '';
-    contents.value = [];
   };
 
   return { prefix, contents, $reset, onClick };
