@@ -57,6 +57,12 @@ updates:
         update-types:
           - minor
           - patch
+      vueuse-group:
+        patterns:
+          - "@vueuse/*"
+        update-types:
+          - minor
+          - patch
       other-group:
         patterns:
           - "*"
