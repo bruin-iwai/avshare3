@@ -7,7 +7,6 @@ export default defineConfig({
   test: {
     name: 'api',
     environment: 'node',
-    clearMocks: true,
     setupFiles: ['__tests__/setup.ts'],
   },
 });
