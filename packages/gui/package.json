@@ -2,6 +2,7 @@
   "name": "@avshare3/gui",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "nuxt dev --dotenv .env.test",
     "build": "nuxt build",
