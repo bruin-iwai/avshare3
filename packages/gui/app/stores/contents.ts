@@ -9,7 +9,7 @@ export const useContentsStore = defineStore('contents', () => {
     if (!prefix.value) {
       return [];
     }
-    return await api<ContentInfoType[]>('/contentsList', {
+    return api<ContentInfoType[]>('/contentsList', {
       method: 'GET',
       query: { prefix: prefix.value },
     });

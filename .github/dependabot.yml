@@ -39,17 +39,6 @@ updates:
         update-types:
           - minor
           - patch
-      eslint-group:
-        patterns:
-          - eslint
-          - eslint-config-prettier
-          - globals
-          - typescript-eslint
-          - "@eslint/*"
-          - "@nuxt/eslint"
-        update-types:
-          - minor
-          - patch
       fastify-group:
         patterns:
           - fastify
