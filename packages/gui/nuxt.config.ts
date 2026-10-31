@@ -1,7 +1,7 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module'],
+  modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
   runtimeConfig: {
     public: {

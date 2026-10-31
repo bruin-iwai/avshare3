@@ -31,9 +31,8 @@ describe('useContentsStore', () => {
   test('$reset', () => {
     const contentsStore = useContentsStore();
     const { prefix } = storeToRefs(contentsStore);
-    const { $reset } = contentsStore;
     prefix.value = 'aaa';
-    $reset();
+    contentsStore.$reset();
     expect(prefix.value).toEqual('');
   });
 

@@ -18,9 +18,8 @@ describe('useLoadingStore', () => {
   test('$reset', () => {
     const loadingStore = useLoadingStore();
     const { loading } = storeToRefs(loadingStore);
-    const { $reset } = loadingStore;
     loading.value = true;
-    $reset();
+    loadingStore.$reset();
     expect(loading.value).toBeFalsy();
   });
 });

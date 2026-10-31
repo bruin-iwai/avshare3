@@ -1,4 +1,4 @@
-import { vi, describe, test, expect, MockedClass } from 'vitest';
+import { vi, describe, test, expect, type MockedClass } from 'vitest';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { generateSignedUrl } from '~/repositories/generateSignedUrl.js';
